@@ -27,9 +27,10 @@ export default function Register() {
     
 
     try {
-      await api.registerUser(body);
-      navigate("/login");
+      await api.signup(body);
+      navigate("/");
     } catch (error) {
+      console.log(error)
       alert("Erro, tente novamente");
     }
   }

@@ -32,11 +32,18 @@ function getPosts(token) {
   return promise;
 }
 
+function sendPost(data, token) {
+  const config = createConfig(token);
+  const promise = axios.post(`${BASE_URL}/home`, data, config);
+  return promise;
+}
+
 const api = {
   signup,
   login,
   getUser,
   getPosts,
+  sendPost,
 };
 
 export default api;

@@ -8,6 +8,8 @@ export default function Home() {
   const { auth } = useAuth();
   const [user, setUser] = useState(null);
   const [posts, setPosts] = useState([]);
+  const [formData, setFormData] = useState({ url: "", description: "" });
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     handleUser();
@@ -24,6 +26,27 @@ export default function Home() {
     }
   }
 
+  async function handleSubmit(e) {
+    e.preventDefault();
+
+    if (!formData.url) {
+      return;
+    }
+    setIsLoading(true);
+
+    try {
+      await api.sendPost(formData, auth);
+      setFormData({ url: "", description: "" });
+    } catch (error) {
+      console.log(error);
+    }
+    setIsLoading(false);
+  }
+
+  function handleInputChange({ selected }) {
+    setFormData({ ...formData, [selected.name]: selected.value });
+  }
+
   async function renderPosts() {
     try {
       const { data } = await api.getPosts(auth);
@@ -38,7 +61,33 @@ export default function Home() {
       <TopBar {...user} />
       <Feed>
         <h1>timeline</h1>
-        <NewPost></NewPost>
+        <form onSubmit={handleSubmit}>
+          <Photo>
+            <img src={user.img} alt="userPhoto" />
+          </Photo>
+          <NewPost>
+            <h1>What are you going to share today?</h1>
+            <InputUrl
+              type="url"
+              name="url"
+              value={formData.url}
+              placeholder="http://..."
+              onChange={handleInputChange}
+              disabled={isLoading}
+              required
+            />
+            <InputDescription
+              name="description"
+              value={formData.description}
+              placeholder="Awesome article about #javascript"
+              onChange={handleInputChange}
+              disabled={isLoading}
+            />
+            <Button disabled={isLoading}>
+              {isLoading ? "Publishing..." : "Publish"}
+            </Button>
+          </NewPost>
+        </form>
         <Posts>
           {posts.map((p) => (
             <Post key={p.id}>
@@ -64,3 +113,6 @@ const Posts = styled.div``;
 const Post = styled.div``;
 const Photo = styled.img``;
 const PostInfo = styled.div``;
+const InputUrl = styled.input``;
+const InputDescription = styled.input``;
+const Button = styled.button``;

@@ -10,6 +10,7 @@ export default function Home() {
   const [posts, setPosts] = useState([]);
   const [formData, setFormData] = useState({ link: "", description: "" });
   const [isLoading, setIsLoading] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
 
   useEffect(() => {
     handleUser();
@@ -55,66 +56,205 @@ export default function Home() {
       setPosts(data);
     } catch (error) {
       console.log(error);
+      alert(
+        "An error occured while trying to fetch the posts, please refresh the page"
+      );
     }
   }
 
   return (
     <>
-      <TopBar {...user} />
       <Feed>
+        <TopBar {...user} />
+
         <h1>timeline</h1>
         <form onSubmit={handleSubmit}>
-          <Photo>
-            <img src={user.img} alt="userPhoto" />
-          </Photo>
           <NewPost>
-            <h1>What are you going to share today?</h1>
-            <InputUrl
-              type="url"
-              name="url"
-              value={formData.link}
-              placeholder="http://..."
-              onChange={handleInputChange}
-              disabled={isLoading}
-              required
-            />
-            <InputDescription
-              name="description"
-              value={formData.description}
-              placeholder="Awesome article about #javascript"
-              onChange={handleInputChange}
-              disabled={isLoading}
-            />
-            <Button disabled={isLoading}>
-              {isLoading ? "Publishing..." : "Publish"}
-            </Button>
+            <Photo src={user.img} alt="userPhoto" />
+
+            <PostContent>
+              <h1>What are you going to share today?</h1>
+              <InputUrl
+                type="url"
+                name="url"
+                value={formData.link}
+                placeholder="http://..."
+                onChange={handleInputChange}
+                disabled={isLoading}
+                required
+              />
+              <InputDescription
+                name="description"
+                value={formData.description}
+                placeholder="Awesome article about #javascript"
+                onChange={handleInputChange}
+                disabled={isLoading}
+              />
+              <Button disabled={isLoading}>
+                {isLoading ? "Publishing..." : "Publish"}
+              </Button>
+            </PostContent>
           </NewPost>
         </form>
         <Posts>
-          {posts.map((p) => (
-            <Post key={p.id}>
-              <Photo>
-                <img src={user.img} alt="userPhoto" />
-              </Photo>
-              <PostInfo>
-                <h2>{user.name}</h2>
-                <p>{p.description}</p>
-                <p>{p.link}</p>
-              </PostInfo>
-            </Post>
-          ))}
+          {posts.length === 0 ? (
+            <h1>There are no posts yet</h1>
+          ) : (
+            posts.map((p) => (
+              <Post key={p.id}>
+                <Photo src={user.img} alt="userPhoto" />
+
+                <PostInfo>
+                  <h2>{user.name}</h2>
+                  <p>{p.description}</p>
+                  <p>{p.link}</p>
+                </PostInfo>
+              </Post>
+            ))
+          )}
         </Posts>
       </Feed>
     </>
   );
 }
 
-const Feed = styled.div``;
-const NewPost = styled.div``;
+const Feed = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: #333333;
+  width: 100%;
+  h3 {
+    margin-top: 130px;
+    font-family: Oswald;
+    font-size: 43px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 64px;
+    letter-spacing: 0em;
+    text-align: left;
+    color: #ffffff;
+  }
+`;
+const NewPost = styled.div`
+  background: white;
+  height: 209px;
+  width: 611px;
+  display: flex;
+  margin-bottom: 29px;
+  border-radius: 16px;
+  box-shadow: 0px 4px 4px 0px #00000040;
+`;
 const Posts = styled.div``;
-const Post = styled.div``;
-const Photo = styled.img``;
-const PostInfo = styled.div``;
-const InputUrl = styled.input``;
-const InputDescription = styled.input``;
-const Button = styled.button``;
+const Post = styled.div`
+  height: 100%;
+  width: 611px;
+
+  border-radius: 16px;
+  background: #171717;
+  margin-bottom: 16px;
+  display: flex;
+`;
+const Photo = styled.img`
+  width: 53px;
+  height: 53px;
+  margin-right: 21px;
+  margin-top: 16px;
+  margin-left: 18px;
+  border-radius: 50%;
+`;
+const PostInfo = styled.div`
+  display: flex;
+  flex-direction: column;
+  word-wrap: break-word;
+  word-break: break-all;
+  margin-right: 22px;
+
+  h2 {
+    font-family: Lato;
+    font-size: 19px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 23px;
+    letter-spacing: 0em;
+    text-align: left;
+    color: #ffffff;
+    margin-bottom: 7px;
+  }
+  p {
+    font-family: Lato;
+    font-size: 17px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 20px;
+    letter-spacing: 0em;
+    text-align: left;
+    color: #b7b7b7;
+  }
+`;
+const InputUrl = styled.input`
+  border: none;
+  height: 30px;
+  width: 503px;
+  left: 501px;
+  top: 313px;
+  border-radius: 5px;
+  background: #efefef;
+  font-family: Lato;
+  font-size: 15px;
+  font-style: normal;
+  font-weight: 300;
+  line-height: 18px;
+  letter-spacing: 0em;
+  text-align: left;
+  margin-bottom: 5px;
+`;
+const InputDescription = styled.input`
+  border: none;
+  height: 66px;
+  width: 502px;
+  border-radius: 5px;
+  background: #efefef;
+  font-family: Lato;
+  font-size: 15px;
+  font-style: normal;
+  font-weight: 300;
+  line-height: 18px;
+  letter-spacing: 0em;
+  text-align: left;
+  color: #949494;
+  margin-bottom: 5px;
+`;
+const Button = styled.button`
+  border: none;
+  height: 31px;
+  width: 112px;
+  left: 892px;
+  top: 419px;
+  border-radius: 5px;
+  background: #1877f2;
+  font-family: Lato;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 17px;
+  letter-spacing: 0em;
+  text-align: center;
+  color: #ffffff;
+`;
+
+const PostContent = styled.div`
+  display: flex;
+  flex-direction: column;
+  h1 {
+    border-radius: nullpx;
+    font-family: Lato;
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 300;
+    line-height: 24px;
+    letter-spacing: 0em;
+    text-align: left;
+    color: #707070;
+  }
+`;

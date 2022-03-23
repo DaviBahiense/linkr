@@ -14,7 +14,6 @@ function signup(body) {
 
 function login(body) {
   const promise = axios.post(`${BASE_URL}/`, body);
-  console.log("aqui")
 
   return promise;
 }

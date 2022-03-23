@@ -9,8 +9,6 @@ export default function TopBar(user){
     const navigate = useNavigate();
     const { logOut } = useAuth();
 
-    console.log(user)
-
     function menu() {
         if (selected === false) {
             setSelected(true) 
@@ -20,13 +18,12 @@ export default function TopBar(user){
         logOut()
         navigate("/")
     }
-
     return (
         <Cont>
             <Box onClick={() => menu()}> 
                 <h1>linkr</h1>
                 <User>
-                    {selected ? <BiChevronUp size="3em" color="white" /> : <BiChevronDown size="3em" color="white" />}
+                    {selected ? <BiChevronUp size="3em" color="white" className="icon" /> : <BiChevronDown size="3em" color="white" className="icon"/>}
                     <img src={user.img} alt="userPhoto" />
                 </User>
             </ Box> 
@@ -91,10 +88,16 @@ const Box = styled.div`
         color: #FFFFFF;
 
     }
-    
+    @media(max-width: 375px) {
+    h1{
+        font-size: 45px;
+    }
+  }
 `
 const User = styled.div`
     display: flex;
+    align-items: center;
+    
     img{
         width: 53px;
         height: 53px;
@@ -107,4 +110,12 @@ const User = styled.div`
         font-size: 40px;
         color: #FFFFFF;
     }
+    @media(max-width: 375px) {
+    img{
+        margin-right: 14px;
+    }
+    .icon{
+        font-size: 15px;
+    }
+}
 `

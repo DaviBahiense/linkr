@@ -8,7 +8,7 @@ export default function Home() {
   const { auth } = useAuth();
   const [user, setUser] = useState(null);
   const [posts, setPosts] = useState([]);
-  const [formData, setFormData] = useState({ url: "", description: "" });
+  const [formData, setFormData] = useState({ link: "", description: "" });
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
@@ -29,18 +29,20 @@ export default function Home() {
   async function handleSubmit(e) {
     e.preventDefault();
 
-    if (!formData.url) {
+    if (!formData.link) {
       return;
     }
     setIsLoading(true);
 
     try {
       await api.sendPost(formData, auth);
-      setFormData({ url: "", description: "" });
+      setFormData({ link: "", description: "" });
     } catch (error) {
       console.log(error);
+      alert("Houve um erro ao publicar seu link");
     }
     setIsLoading(false);
+    renderPosts();
   }
 
   function handleInputChange({ selected }) {
@@ -70,7 +72,7 @@ export default function Home() {
             <InputUrl
               type="url"
               name="url"
-              value={formData.url}
+              value={formData.link}
               placeholder="http://..."
               onChange={handleInputChange}
               disabled={isLoading}

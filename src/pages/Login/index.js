@@ -31,7 +31,7 @@ export default function Login() {
       const { data } = await api.login(body);
 
       login(data);
-      navigate("/");
+      navigate("/home");
     } catch (error) {
       console.log(error);
     }

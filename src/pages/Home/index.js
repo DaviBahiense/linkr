@@ -52,7 +52,7 @@ export default function Home() {
 
   async function renderPosts() {
     try {
-      const { data } = await api.getPosts(auth);
+      const { data } = await api.getPosts();
       setPosts(data);
     } catch (error) {
       console.log(error);
@@ -100,14 +100,16 @@ export default function Home() {
           {posts.length === 0 ? (
             <h1>There are no posts yet</h1>
           ) : (
-            posts.map((p) => (
-              <Post key={p.id}>
-                <Photo src={user.img} alt="userPhoto" />
+            posts.map((p, i) => (
+              <Post key={i}>
+                <Photo src={p.img} alt="userPhoto" />
 
                 <PostInfo>
-                  <h2>{user.name}</h2>
-                  <p>{p.description}</p>
-                  <p>{p.link}</p>
+                  <h2>{p.name}</h2>
+                  <p>{p.metadataTitle}</p>
+                  <p>{p.metadataDescription}</p>
+                  <Link href={p.link}>{p.link}</Link>
+                  <Img src={p.metadataImg}></Img>
                 </PostInfo>
               </Post>
             ))
@@ -169,6 +171,7 @@ const PostInfo = styled.div`
   word-wrap: break-word;
   word-break: break-all;
   margin-right: 22px;
+  position: relative;
 
   h2 {
     font-family: Lato;
@@ -257,4 +260,21 @@ const PostContent = styled.div`
     text-align: left;
     color: #707070;
   }
+`;
+
+const Link = styled.a`
+  all: unset;
+  font-size: 11px;
+  font-weight: 400;
+  line-height: 13px;
+  cursor: pointer;
+`;
+const Img = styled.img`
+  object-fit: cover;
+  height: 100%;
+  width: 154px;
+  border-radius: 0 12px 13px 0;
+  position: absolute;
+  right: 0;
+  top: 0px;
 `;

@@ -28,13 +28,13 @@ function getUser(token) {
 
 function getPosts(token) {
   const config = createConfig(token);
-  const promise = axios.get(`${BASE_URL}/home`, config);
+  const promise = axios.get(`${BASE_URL}/posts`, config);
   return promise;
 }
 
 function sendPost(data, token) {
   const config = createConfig(token);
-  const promise = axios.post(`${BASE_URL}/home`, data, config);
+  const promise = axios.post(`${BASE_URL}/posts`, data, config);
   return promise;
 }
 

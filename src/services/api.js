@@ -4,7 +4,7 @@ export const BASE_URL = "http://localhost:5000";
 
 function createConfig(token) {
   return { headers: { Authorization: `Bearer ${token}` } };
-} 
+}
 
 function signup(body) {
   const promise = axios.post(`${BASE_URL}/sign-up`, body);
@@ -25,11 +25,24 @@ function getUser(token) {
   return promise;
 }
 
+function getPosts(token) {
+  const config = createConfig(token);
+  const promise = axios.get(`${BASE_URL}/posts`, config);
+  return promise;
+}
+
+function sendPost(data, token) {
+  const config = createConfig(token);
+  const promise = axios.post(`${BASE_URL}/posts`, data, config);
+  return promise;
+}
+
 const api = {
   signup,
   login,
-  getUser
-
+  getUser,
+  getPosts,
+  sendPost,
 };
 
 export default api;

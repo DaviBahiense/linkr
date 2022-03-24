@@ -1,5 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
+import { useState } from "react";
 import { registerSchema } from "../../validation/formValidation";
 import { yupResolver } from "@hookform/resolvers/yup";
 import {
@@ -11,9 +12,10 @@ import {
   StyledLink,
 } from "../../components/AuthComponents";
 import api from "../../services/api";
-
+import { Bars } from 'react-loader-spinner';
 
 export default function Register() {
+  const [isLoading, setIsLoading] = useState(false);
   const {
     register,
     handleSubmit,
@@ -25,13 +27,17 @@ export default function Register() {
 
   async function handleRegister(body) {
     
-
+    setIsLoading(true);
     try {
       await api.signup(body);
+      setIsLoading(false);
       navigate("/");
     } catch (error) {
+      if (error.response.status === 409) {
+        alert("Usuário já cadastrado")
+        setIsLoading(false);
+      }
       console.log(error)
-      alert("Erro, tente novamente");
     }
   }
 
@@ -73,7 +79,13 @@ export default function Register() {
           name="img"
         />
         <p>{errors.img?.message}</p>
-        <Button>Sign Up</Button>
+        <Button disabled={isLoading}>
+          {
+            isLoading
+              ? <Bars color="#FFFFFF" height={60} width={60} />
+              : "Sign Up"
+          }
+        </Button>
         <StyledLink to="/">Switch back to log in</StyledLink>
       </Form>
     </Container>

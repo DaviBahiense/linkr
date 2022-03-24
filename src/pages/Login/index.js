@@ -1,5 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
+import { useState } from "react";
 import { loginSchema } from "../../validation/formValidation";
 import { yupResolver } from "@hookform/resolvers/yup";
 import {
@@ -12,9 +13,11 @@ import {
 } from "../../components/AuthComponents";
 import api from "../../services/api";
 import useAuth from "../../hooks/useAuth";
+import { Bars } from 'react-loader-spinner';
 
 
 export default function Login() {
+  const [isLoading, setIsLoading] = useState(false);
   const {
     register,
     handleSubmit,
@@ -27,12 +30,19 @@ export default function Login() {
   const { login } = useAuth();
 
   async function handleLogin(body) {
+    setIsLoading(true);
+
     try {
       const { data } = await api.login(body);
+      setIsLoading(false);
 
       login(data);
       navigate("/home");
     } catch (error) {
+      setIsLoading(false);
+      if (error.response.status === 401) {
+        alert("Usuário ou senha não coincidem")
+      }
       console.log(error);
     }
   }
@@ -62,7 +72,13 @@ export default function Login() {
         />
         <p>{errors.password?.message}</p>
 
-        <Button>Log In</Button>
+        <Button disabled={isLoading}>
+          {
+            isLoading
+              ? <Bars color="#FFFFFF" height={60} width={60} />
+              : "Log In"
+          }
+        </Button>
         <StyledLink to="/sign-up">First time? Create an account!</StyledLink>
       </Form>
 

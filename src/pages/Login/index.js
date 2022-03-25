@@ -13,8 +13,7 @@ import {
 } from "../../components/AuthComponents";
 import api from "../../services/api";
 import useAuth from "../../hooks/useAuth";
-import { Bars } from 'react-loader-spinner';
-
+import { Bars } from "react-loader-spinner";
 
 export default function Login() {
   const [isLoading, setIsLoading] = useState(false);
@@ -41,7 +40,7 @@ export default function Login() {
     } catch (error) {
       setIsLoading(false);
       if (error.response.status === 401) {
-        alert("Usuário ou senha não coincidem")
+        alert("Usuário ou senha não coincidem");
       }
       console.log(error);
     }
@@ -52,7 +51,10 @@ export default function Login() {
       <Welcome>
         <div>
           <h1>linkr</h1>
-          <h2>save, share and discover <br/>the best links on the web</h2>
+          <h2>
+            save, share and discover <br />
+            the best links on the web
+          </h2>
         </div>
       </Welcome>
 
@@ -73,15 +75,14 @@ export default function Login() {
         <p>{errors.password?.message}</p>
 
         <Button disabled={isLoading}>
-          {
-            isLoading
-              ? <Bars color="#FFFFFF" height={60} width={60} />
-              : "Log In"
-          }
+          {isLoading ? (
+            <Bars color="#FFFFFF" height={60} width={60} />
+          ) : (
+            "Log In"
+          )}
         </Button>
         <StyledLink to="/sign-up">First time? Create an account!</StyledLink>
       </Form>
-
     </Container>
   );
 }

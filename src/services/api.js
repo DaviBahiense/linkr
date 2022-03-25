@@ -37,12 +37,19 @@ function sendPost(data, token) {
   return promise;
 }
 
+function editPost(data, token) {
+  const config = createConfig(token);
+  const promise = axios.put(`${BASE_URL}/posts`, data, config);
+  return promise;
+}
+
 const api = {
   signup,
   login,
   getUser,
   getPosts,
   sendPost,
+  editPost,
 };
 
 export default api;

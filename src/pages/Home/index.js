@@ -3,24 +3,20 @@ import api from "../../services/api";
 import TopBar from "./TopBar";
 import useAuth from "../../hooks/useAuth";
 import {
-  Metainfo,
   LoadContainer,
-  Metadata,
   PostContainer,
   Feed,
   NewPost,
   Posts,
-  Post,
   Photo,
-  PostInfo,
   InputUrl,
   Description,
   Button,
   PostContent,
-  Link,
-  Img,
 } from "./style.js";
 import { ThreeDots } from "react-loader-spinner";
+
+import Post from "./Post";
 
 export default function Home() {
   const { auth } = useAuth();
@@ -43,14 +39,13 @@ export default function Home() {
     try {
       const { data: userData } = await api.getUser(auth);
       setUser(userData);
-      console.log(user);
     } catch (error) {
       console.log(error);
       alert("Erro, tente novamente");
     }
   }
 
-  async function handleSubmit(e) {
+  async function handleSubmitPost(e) {
     e.preventDefault();
 
     if (!formData.link) {
@@ -96,7 +91,7 @@ export default function Home() {
       <Feed>
         <PostContainer>
           <h1 className="head">timeline</h1>
-          <form onSubmit={handleSubmit}>
+          <form onSubmit={handleSubmitPost}>
             <NewPost>
               <Photo className="hidden" src={user.img} alt="userPhoto" />
 
@@ -133,26 +128,7 @@ export default function Home() {
             ) : posts.length === 0 ? (
               <h1>There are no posts yet</h1>
             ) : (
-              posts.map((p, i) => (
-                <Post key={i}>
-                  <Photo src={p.img} alt="userPhoto" />
-
-                  <PostInfo>
-                    <h2>{p.name}</h2>
-                    <h5>{p.description}</h5>
-                    <Metadata>
-                      <Metainfo>
-                        <h4>{p.metadataTitle}</h4>
-                        <p>{p.metadataDescription}</p>
-                        <Link href={p.link} target="_blank">
-                          {p.link}
-                        </Link>
-                      </Metainfo>
-                      <Img src={p.metadataImg}></Img>
-                    </Metadata>
-                  </PostInfo>
-                </Post>
-              ))
+              posts.map((p, i) => <Post {...p} key={i} />)
             )}
           </Posts>
         </PostContainer>

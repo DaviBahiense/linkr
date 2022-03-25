@@ -19,8 +19,10 @@ import {
   PostContent,
   Link,
   Img,
+  Container,
 } from "./style.js";
 import { ThreeDots } from "react-loader-spinner";
+import Like from "../../components/like/Like"
 
 export default function Home() {
   const { auth } = useAuth();
@@ -135,7 +137,10 @@ export default function Home() {
             ) : (
               posts.map((p, i) => (
                 <Post key={i}>
-                  <Photo src={p.img} alt="userPhoto" />
+                  <Container>
+                    <Photo src={p.img} alt="userPhoto" />
+                    <Like id = {p.id} />
+                  </Container>
 
                   <PostInfo>
                     <h2>{p.name}</h2>

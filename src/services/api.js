@@ -37,12 +37,17 @@ function sendPost(data, token) {
   return promise;
 }
 
+function postLike(token, id, type) {
+  axios.post(`${BASE_URL}/posts/${id}/${type}`, {}, createConfig(token));
+}
+
 const api = {
   signup,
   login,
   getUser,
   getPosts,
   sendPost,
+  postLike,
 };
 
 export default api;

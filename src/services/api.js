@@ -31,6 +31,12 @@ function getPosts(token) {
   return promise;
 }
 
+function getPostsFromATag(token, tag) {
+  const config = createConfig(token);
+  const promise = axios.get(`${BASE_URL}/hashtags/${tag}`, config);
+  return promise;
+}
+
 function sendPost(data, token) {
   const config = createConfig(token);
   const promise = axios.post(`${BASE_URL}/posts`, data, config);
@@ -42,6 +48,7 @@ const api = {
   login,
   getUser,
   getPosts,
+  getPostsFromATag,
   sendPost,
 };
 

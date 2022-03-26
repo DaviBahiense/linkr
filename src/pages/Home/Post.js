@@ -59,7 +59,6 @@ export default function Post(p) {
       await api.editPost(body, auth);
 
       setEdit(false);
-      //document.location.reload(true);
     } catch (error) {
       console.log(error);
       setEdit(true);

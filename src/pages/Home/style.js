@@ -127,10 +127,16 @@ const Post = styled.div`
     border-radius: 0px;
   }
 `;
+const Container = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 19px 0px;
+`;
 const Photo = styled.img`
   width: 50px;
   height: 50px;
-  margin-right: 21px;
+  margin-right: 18px;
   margin-top: 16px;
   margin-left: 18px;
   border-radius: 50%;
@@ -441,6 +447,7 @@ export {
   PostContent,
   Link,
   Img,
+  Container,
   UserPostInterac,
   EditDescription,
 };

@@ -14,7 +14,9 @@ import {
   Link,
   Img,
   UserPostInterac,
+  Container,
 } from "./style";
+import Like from "../../components/like/Like";
 
 export default function Post(p) {
   const [edit, setEdit] = useState(false);
@@ -68,7 +70,10 @@ export default function Post(p) {
 
   return (
     <PostWrapper>
-      <Photo src={p.img} alt="userPhoto" />
+      <Container>
+        <Photo src={p.img} alt="userPhoto" />
+        <Like id = {p.postId} />
+      </Container>
 
       <PostInfo>
         <UserPostInterac>

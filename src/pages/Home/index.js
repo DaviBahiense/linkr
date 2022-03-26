@@ -12,7 +12,7 @@ import {
   InputUrl,
   Description,
   Button,
-  PostContent,
+  PostContent
 } from "./style.js";
 import { ThreeDots } from "react-loader-spinner";
 import Post from "./Post";

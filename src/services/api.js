@@ -31,6 +31,12 @@ function getPosts(token) {
   return promise;
 }
 
+function deletePost(id, token) {
+  const config = createConfig(token);
+  const promise = axios.delete(`${BASE_URL}/posts/${id}`, config);
+  return promise;
+}
+
 function sendPost(data, token) {
   const config = createConfig(token);
   const promise = axios.post(`${BASE_URL}/posts`, data, config);
@@ -50,6 +56,7 @@ const api = {
   getPosts,
   sendPost,
   editPost,
+  deletePost,
 };
 
 export default api;

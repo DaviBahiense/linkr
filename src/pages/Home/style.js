@@ -379,7 +379,9 @@ const Img = styled.img`
 `;
 
 const Hashtag = styled.span`
+  font-weight: bold;
   color: #fff;
+  cursor: pointer;
 `
 
 export {

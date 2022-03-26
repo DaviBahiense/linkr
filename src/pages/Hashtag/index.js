@@ -18,6 +18,8 @@ import {
   Hashtag
 } from "./style.js";
 import { ThreeDots } from "react-loader-spinner";
+import ReactHashtag from "react-hashtag";
+
 
 export default function Home() {
   const { auth } = useAuth();
@@ -63,25 +65,6 @@ export default function Home() {
     }
   }
 
-  function replacer(match, p1, offset, string) {
-    return (
-      <Hashtag onClick={() => navigate("/hashtag/${match.slice(1)}")}>
-        {match}
-      </Hashtag>
-    )
-  }
-
-  /////////////////////////aqui oh /////////////////////////////////////////////////////////////
-  function Description(props) {
-    const description = props.children
-    //console.log(description.replace(/\B(\#[a-zA-Z0-9]+\b)(?!;)/gm, replacer))
-    return (
-      <h5>
-        {props.children}
-      </h5>
-    )
-  }
-
   return (
     <>
       <TopBar {...user} />
@@ -104,9 +87,17 @@ export default function Home() {
                   <PostInfo>
 
                     <h2>{p.name}</h2>
-                    <Description>
-                      {p.description}
-                    </Description>
+                    <h5>
+                      <ReactHashtag
+                        renderHashtag={(hashtag) => (
+                          <Hashtag onClick={() => navigate(`/hashtag/${hashtag.substr(1)}`)}>
+                            {hashtag}
+                          </Hashtag>
+                        )}
+                      >
+                        {p.description}
+                      </ReactHashtag>
+                    </h5>
 
                     <Metadata>
                       <Metainfo>

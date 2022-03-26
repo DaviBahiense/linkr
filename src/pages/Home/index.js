@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import api from "../../services/api";
 import TopBar from "./TopBar";
 import useAuth from "../../hooks/useAuth";
@@ -19,8 +20,10 @@ import {
   PostContent,
   Link,
   Img,
+  Hashtag
 } from "./style.js";
 import { ThreeDots } from "react-loader-spinner";
+import ReactHashtag from "react-hashtag";
 
 export default function Home() {
   const { auth } = useAuth();
@@ -29,6 +32,7 @@ export default function Home() {
   const [formData, setFormData] = useState({ link: "", description: "" });
   const [isLoading, setIsLoading] = useState(false);
   const [loadingPosts, setLoadingPosts] = useState(true);
+  const navigate = useNavigate();
 
   useEffect(() => {
     renderPage();
@@ -139,7 +143,17 @@ export default function Home() {
 
                   <PostInfo>
                     <h2>{p.name}</h2>
-                    <h5>{p.description}</h5>
+                    <h5>
+                      <ReactHashtag
+                        renderHashtag={(hashtag) => (
+                          <Hashtag onClick={() => navigate(`/hashtag/${hashtag.substr(1)}`)}>
+                            {hashtag}
+                          </Hashtag>
+                        )}
+                      >
+                        {p.description}
+                      </ReactHashtag>
+                    </h5>
                     <Metadata>
                       <Metainfo>
                         <h4>{p.metadataTitle}</h4>

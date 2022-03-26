@@ -3,6 +3,7 @@ import { AuthProvider } from "./context/AuthContext";
 import { useState } from "react";
 import LoginContext from "./context/LoginContext.js";
 import { Login, Signup, Home } from "./pages"
+import { UserProvider } from "./context/UserContext";
 
 
 export default function App() {
@@ -10,15 +11,17 @@ export default function App() {
 
   return (
     <LoginContext.Provider value={{ isLogged, setIsLogged }}>
-      <AuthProvider> 
-        <BrowserRouter>
-          <Routes>
-            <Route path="/" element={<Login />} />
-            <Route path="/sign-up" element={<Signup />} />
-            <Route path="/home" element={<Home />} />
-          </Routes>
-        </BrowserRouter>
-       </AuthProvider>
+      <AuthProvider>
+        <UserProvider>
+          <BrowserRouter>
+            <Routes>
+              <Route path="/" element={<Login />} />
+              <Route path="/sign-up" element={<Signup />} />
+              <Route path="/home" element={<Home />} />
+            </Routes>
+          </BrowserRouter>
+        </UserProvider>
+      </AuthProvider>
     </LoginContext.Provider> 
   );
 }

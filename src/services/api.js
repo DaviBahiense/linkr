@@ -38,7 +38,11 @@ function sendPost(data, token) {
 }
 
 function postLike(token, id, type) {
-  axios.post(`${BASE_URL}/posts/${id}/${type}`, {}, createConfig(token));
+  return axios.post(`${BASE_URL}/likes/${id}/${type}`, {}, createConfig(token));
+}
+
+function getLikes(token, id){
+  return axios.get(`${BASE_URL}/likes/${id}`, createConfig(token));
 }
 
 const api = {
@@ -48,6 +52,7 @@ const api = {
   getPosts,
   sendPost,
   postLike,
+  getLikes
 };
 
 export default api;

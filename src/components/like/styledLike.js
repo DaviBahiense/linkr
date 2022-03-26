@@ -2,7 +2,6 @@ import styled from "styled-components";
 
 const StyledLike = styled.div`
     margin: 0 auto;
-    background-color: blue;
     display: flex;
     flex-direction: column;
     align-items: center;

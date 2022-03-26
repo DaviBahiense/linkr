@@ -42,6 +42,9 @@ export default function Login() {
       if (error.response.status === 401) {
         alert("Usuário ou senha não coincidem");
       }
+      if (error.response.status === 422) {
+        alert("formato do email errado");
+      }
       console.log(error);
     }
   }

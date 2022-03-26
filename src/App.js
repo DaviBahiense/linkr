@@ -5,7 +5,6 @@ import LoginContext from "./context/LoginContext.js";
 import { Login, Signup, Home } from "./pages"
 import { UserProvider } from "./context/UserContext";
 
-
 export default function App() {
   const [isLogged, setIsLogged] = useState();
 

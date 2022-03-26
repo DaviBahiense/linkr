@@ -277,7 +277,7 @@ const Description = styled.textarea`
   line-height: 18px;
   letter-spacing: 0em;
   text-align: left;
-  color: #949494;
+  color: #4c4c4c;
   margin-bottom: 5px;
   border-radius: 5px;
   background-color: #efefef;
@@ -383,6 +383,52 @@ const Img = styled.img`
   right: 0;
   top: 0px;
 `;
+const UserPostInterac = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+`;
+const EditDescription = styled.textarea`
+  border: none;
+  height: 66px;
+  width: 502px;
+  border-radius: 5px;
+  background: #efefef;
+  font-family: Lato;
+  font-size: 15px;
+  font-style: normal;
+  font-weight: 300;
+  line-height: 18px;
+  letter-spacing: 0em;
+  text-align: left;
+  color: #949494;
+  margin-bottom: 5px;
+  border-radius: 5px;
+  background-color: #efefef;
+  height: 66px;
+  line-height: 18px;
+  margin-bottom: 5px;
+  padding-top: 8px;
+  padding-left: 12px;
+  resize: none;
+  outline: none;
+  border: none;
+  &::placeholder {
+    color: #949494;
+    font-size: 15px;
+    font-weight: 300;
+  }
+  &:disabled {
+    opacity: 0.5;
+  }
+
+  &:disabled {
+    opacity: 0.5;
+  }
+  @media (max-width: 620px) {
+    width: 100%;
+  }
+`;
 
 export {
   Metainfo,
@@ -402,4 +448,6 @@ export {
   Link,
   Img,
   Container,
+  UserPostInterac,
+  EditDescription,
 };

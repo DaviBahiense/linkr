@@ -45,6 +45,12 @@ function getLikes(token, id){
   return axios.get(`${BASE_URL}/likes/${id}`, createConfig(token));
 }
 
+function editPost(data, token) {
+  const config = createConfig(token);
+  const promise = axios.put(`${BASE_URL}/posts`, data, config);
+  return promise;
+}
+
 const api = {
   signup,
   login,
@@ -52,7 +58,8 @@ const api = {
   getPosts,
   sendPost,
   postLike,
-  getLikes
+  getLikes,
+  editPost,
 };
 
 export default api;

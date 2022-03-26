@@ -10,11 +10,13 @@ export function UserProvider({children}){
     const {auth} = useAuth();
 
     useEffect(()=>{
-        api.getUser(auth).then(response => {
-            setUser(response.data);
-        }).catch(error => {
-            console.log(error.response);
-        })
+        if(auth){
+            api.getUser(auth)?.then(response => {
+                setUser(response.data);
+            }).catch(error => {
+                console.log(error.response);
+            })
+        }
     }, [setUser, auth])
     return(
         <UserContext.Provider value={{user}}>

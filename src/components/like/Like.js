@@ -13,7 +13,7 @@ export default function Like({id}){
     const [amountLikes, setAmountLikes] = useState(0)
     const {auth} = useAuth();
     const {user} = useUser();
-    let textLikes;
+    let textLikes = '';
 
     if (amountLikes === 1 && like){
         textLikes = "Você"
@@ -36,13 +36,13 @@ export default function Like({id}){
             api.postLike(auth, id, 'unlike').then(response => {
                 setLike(!like)
             }).catch(error => {
-                console.error(error.response.status)
+                console.error(error.response)
             })
         } else {
             api.postLike(auth, id, 'like').then(response => {
                 setLike(!like)
             }).catch(error => {
-                console.error(error.response.status)
+                console.error(error.response)
             })
         }
     }

@@ -15,7 +15,6 @@ import {
   PostContent,
 } from "./style.js";
 import { ThreeDots } from "react-loader-spinner";
-
 import Post from "./Post";
 
 export default function Home() {

@@ -1,6 +1,5 @@
 import { TiPencil } from "react-icons/ti";
 import { useEffect, useState } from "react";
-
 import { RiDeleteBin7Fill as Bin } from "react-icons/ri";
 import { useForm } from "react-hook-form";
 import useAuth from "../../hooks/useAuth";
@@ -19,11 +18,15 @@ import {
 
 export default function Post(p) {
   const [edit, setEdit] = useState(false);
+  const [user, setUser] = useState("");
+
   const { auth } = useAuth();
 
-  const { register, handleSubmit } = useForm();
+  const { register, handleSubmit, watch } = useForm();
+  const description = watch("updateDescription", true);
 
   useEffect(() => {
+    handleUser();
     const listener = (event) => {
       if (event.code === "Escape") {
         event.preventDefault();
@@ -32,6 +35,16 @@ export default function Post(p) {
     };
     document.addEventListener("keydown", listener);
   }, []);
+
+  async function handleUser() {
+    try {
+      const { data: userData } = await api.getUser(auth);
+      setUser(userData);
+    } catch (error) {
+      console.log(error);
+      alert("Erro, tente novamente");
+    }
+  }
 
   const enterEdit = (e) => {
     if (e.key === "Enter" && e.shiftKey === false) {
@@ -44,8 +57,9 @@ export default function Post(p) {
     const body = { postId: p.postId, description: data.content };
     try {
       await api.editPost(body, auth);
+
       setEdit(false);
-      document.location.reload(true);
+      //document.location.reload(true);
     } catch (error) {
       console.log(error);
       setEdit(true);
@@ -63,7 +77,11 @@ export default function Post(p) {
           <div>
             <TiPencil
               style={{ color: "white", marginRight: "10px" }}
-              onClick={() => (edit ? setEdit(false) : setEdit(true))}
+              onClick={
+                user.id === p.userId
+                  ? () => (edit ? setEdit(false) : setEdit(true))
+                  : null
+              }
             />
             <Bin color="white" />
           </div>
@@ -79,7 +97,7 @@ export default function Post(p) {
             autoFocus
           />
         ) : (
-          <h5>{p.description}</h5>
+          <h5>{description || p.description}</h5>
         )}
         <Metadata>
           <Metainfo>

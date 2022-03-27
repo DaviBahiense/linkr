@@ -16,6 +16,7 @@ import {
 } from "./style.js";
 import { ThreeDots } from "react-loader-spinner";
 import Post from "./Post";
+import Timeline from "../../components/posts/Timeline";
 
 export default function Home() {
   const { auth } = useAuth();
@@ -119,17 +120,7 @@ export default function Home() {
               </PostContent>
             </NewPost>
           </form>
-          <Posts>
-            {loadingPosts ? (
-              <LoadContainer>
-                <ThreeDots color="#ffffff" height={100} width={100} />
-              </LoadContainer>
-            ) : posts.length === 0 ? (
-              <h1>There are no posts yet</h1>
-            ) : (
-              posts.map((p, i) => <Post {...p} key={i} />)
-            )}
-          </Posts>
+          <Timeline loadingPosts={loadingPosts} posts={posts} />
         </PostContainer>
       </Feed>
     </>

@@ -1,6 +1,6 @@
 import axios from "axios";
 
-export const BASE_URL = "https://linkrr.herokuapp.com";
+export const BASE_URL = "http://localhost:5000";
 
 function createConfig(token) {
   return { headers: { Authorization: `Bearer ${token}` } };
@@ -51,6 +51,10 @@ function editPost(data, token) {
   return promise;
 }
 
+function getUserId(token, id){
+  return axios.get(`${BASE_URL}/users/${id}`, createConfig(token));
+}
+
 const api = {
   signup,
   login,
@@ -60,6 +64,7 @@ const api = {
   postLike,
   getLikes,
   editPost,
+  getUserId,
 };
 
 export default api;

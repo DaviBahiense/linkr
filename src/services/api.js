@@ -57,6 +57,10 @@ function editPost(data, token) {
   return promise;
 }
 
+function getUserId(token, id){
+  return axios.get(`${BASE_URL}/users/${id}`, createConfig(token));
+}
+
 const api = {
   signup,
   login,
@@ -66,6 +70,7 @@ const api = {
   postLike,
   getLikes,
   editPost,
+  getUserId,
   deletePost,
 };
 

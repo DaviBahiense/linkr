@@ -4,6 +4,7 @@ import { useState } from "react";
 import LoginContext from "./context/LoginContext.js";
 import { Login, Signup, Home } from "./pages"
 import { UserProvider } from "./context/UserContext";
+import User from "./pages/User/User";
 
 export default function App() {
   const [isLogged, setIsLogged] = useState();
@@ -17,6 +18,7 @@ export default function App() {
               <Route path="/" element={<Login />} />
               <Route path="/sign-up" element={<Signup />} />
               <Route path="/home" element={<Home />} />
+              <Route path="/user/:id" element={<User />} />
             </Routes>
           </BrowserRouter>
         </UserProvider>

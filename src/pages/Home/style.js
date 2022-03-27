@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import styled from "styled-components";
 
 const Metainfo = styled.div`
@@ -353,7 +354,7 @@ const PostContent = styled.div`
   }
 `;
 
-const Link = styled.a`
+const PostLink = styled.a`
   all: unset;
   font-family: "Lato";
   font-style: normal;
@@ -430,6 +431,10 @@ const EditDescription = styled.textarea`
   }
 `;
 
+const StyledLink = styled(Link)`
+  text-decoration: none;
+`;
+
 export {
   Metainfo,
   LoadContainer,
@@ -445,9 +450,10 @@ export {
   Description,
   Button,
   PostContent,
-  Link,
+  PostLink,
   Img,
   Container,
   UserPostInterac,
   EditDescription,
+  StyledLink,
 };

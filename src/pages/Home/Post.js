@@ -15,10 +15,11 @@ import {
   Photo,
   PostInfo,
   EditDescription,
-  Link,
+  PostLink,
   Img,
   UserPostInterac,
   Container,
+  StyledLink,
 } from "./style";
 import Like from "../../components/like/Like";
 
@@ -113,7 +114,9 @@ export default function Post(p) {
 
       <PostInfo>
         <UserPostInterac>
-          <h2>{p.name}</h2>
+          <StyledLink to={`/user/${p.userId}`}>
+            <h2>{p.name}</h2>
+          </StyledLink>
           <Modal
             isOpen={modal}
             onRequestClose={closeModal}
@@ -166,9 +169,9 @@ export default function Post(p) {
           <Metainfo>
             <h4>{p.metadataTitle}</h4>
             <p>{p.metadataDescription}</p>
-            <Link href={p.link} target="_blank">
+            <PostLink href={p.link} target="_blank">
               {p.link}
-            </Link>
+            </PostLink>
           </Metainfo>
           <Img src={p.metadataImg}></Img>
         </Metadata>

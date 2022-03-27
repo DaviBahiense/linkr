@@ -97,6 +97,7 @@ export default function Post(p) {
     try {
       await api.deletePost(id, auth);
       setIsLoading(false);
+      document.location.reload(true);
     } catch (error) {
       alert("Erro ao deletar o post");
     }

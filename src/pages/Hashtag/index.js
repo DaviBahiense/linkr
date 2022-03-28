@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import api from "../../services/api";
-import TopBar from "./TopBar";
+import TopBar from "../../components/TopBar/TopBar.js";
 import useAuth from "../../hooks/useAuth";
 import {
   PostContainer,

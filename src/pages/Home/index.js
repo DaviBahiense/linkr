@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import api from "../../services/api";
-import TopBar from "./TopBar";
+import TopBar from "../../components/TopBar/TopBar.js";
 import useAuth from "../../hooks/useAuth";
 import {
   PostContainer,

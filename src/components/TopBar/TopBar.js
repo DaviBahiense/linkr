@@ -3,6 +3,8 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import useAuth from "../../hooks/useAuth";
 import { BiChevronDown, BiChevronUp } from "react-icons/bi";
+import SearchBox from "../SearchBox/SearchBox";
+import { Link } from "react-router-dom";
 
 export default function TopBar(user) {
   const [selected, setSelected] = useState(false);
@@ -23,13 +25,18 @@ export default function TopBar(user) {
 
   return (
     <Cont>
-      <Box onClick={() => menu()}>
-        <h1>linkr</h1>
+      <Box >
+        <Link to="/home">
+          <h1>linkr</h1>
+        </Link>
+
+        <SearchBox></SearchBox>
+
         <User>
           {selected ? (
-            <BiChevronUp size="3em" color="white" />
+            <BiChevronUp onClick={() => menu()} size="3em" color="white" />
           ) : (
-            <BiChevronDown size="3em" color="white" />
+            <BiChevronDown onClick={() => menu()} size="3em" color="white" />
           )}
           <img src={user.img} alt="userPhoto" />
         </User>

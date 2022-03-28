@@ -75,6 +75,12 @@ function getUserId(token, id) {
   return axios.get(`${BASE_URL}/users/${id}`, createConfig(token));
 }
 
+function getSearchBarResults(token, search) {
+  const config = createConfig(token)
+  const result = axios.get(`${BASE_URL}/search/${search}`, config)
+  return result
+}
+
 const api = {
   signup,
   login,
@@ -87,7 +93,8 @@ const api = {
   editPost,
   getUserId,
   deletePost,
-  getTrendingTags
+  getTrendingTags,
+  getSearchBarResults
 };
 
 export default api;

@@ -10,9 +10,11 @@ import {
   InputUrl,
   Description,
   Button,
-  PostContent
+  PostContent,
+  Main
 } from "./style.js";
 import Timeline from "../../components/posts/Timeline";
+import HashtagBox from "../../components/HashtagBox";
 
 export default function Home() {
   const { auth } = useAuth();
@@ -82,7 +84,7 @@ export default function Home() {
   }
 
   return (
-    <>
+    <Main>
       <TopBar {...user} />
       <Feed>
         <PostContainer>
@@ -119,6 +121,8 @@ export default function Home() {
           <Timeline loadingPosts={loadingPosts} posts={posts} />
         </PostContainer>
       </Feed>
-    </>
+
+      <HashtagBox></HashtagBox>
+    </Main>
   );
 }

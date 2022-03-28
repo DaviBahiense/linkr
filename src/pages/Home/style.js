@@ -103,6 +103,9 @@ const NewPost = styled.div`
   }
 `;
 const Posts = styled.div`
+  display: flex;
+  flex-direction: column;
+
   h1 {
     margin-top: 50px;
     font-family: Oswald;
@@ -441,6 +444,10 @@ const Hashtag = styled.span`
   cursor: pointer;
 `
 
+const Main = styled.div`
+  display: flex;
+`
+
 export {
   Metainfo,
   LoadContainer,
@@ -463,4 +470,5 @@ export {
   UserPostInterac,
   EditDescription,
   StyledLink,
+  Main
 };

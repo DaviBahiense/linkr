@@ -1,6 +1,6 @@
 import axios from "axios";
 
-export const BASE_URL = "http://localhost:5000";
+export const BASE_URL = "https://linkrr.herokuapp.com";
 
 function createConfig(token) {
   return { headers: { Authorization: `Bearer ${token}` } };
@@ -34,6 +34,11 @@ function getPosts(token) {
 function getPostsFromATag(token, tag) {
   const config = createConfig(token);
   const promise = axios.get(`${BASE_URL}/hashtags/${tag}`, config);
+}
+
+function deletePost(id, token) {
+  const config = createConfig(token);
+  const promise = axios.delete(`${BASE_URL}/posts/${id}`, config);
   return promise;
 }
 
@@ -43,6 +48,24 @@ function sendPost(data, token) {
   return promise;
 }
 
+function postLike(token, id, type) {
+  return axios.post(`${BASE_URL}/likes/${id}/${type}`, {}, createConfig(token));
+}
+
+function getLikes(token, id) {
+  return axios.get(`${BASE_URL}/likes/${id}`, createConfig(token));
+}
+
+function editPost(data, token) {
+  const config = createConfig(token);
+  const promise = axios.put(`${BASE_URL}/posts`, data, config);
+  return promise;
+}
+
+function getUserId(token, id) {
+  return axios.get(`${BASE_URL}/users/${id}`, createConfig(token));
+}
+
 const api = {
   signup,
   login,
@@ -50,6 +73,11 @@ const api = {
   getPosts,
   getPostsFromATag,
   sendPost,
+  postLike,
+  getLikes,
+  editPost,
+  getUserId,
+  deletePost,
 };
 
 export default api;

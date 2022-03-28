@@ -3,7 +3,6 @@ import { AuthProvider } from "./context/AuthContext";
 import { useState } from "react";
 import LoginContext from "./context/LoginContext.js";
 import { Login, Signup, Home, Hashtag } from "./pages"
-import { Login, Signup, Home } from "./pages"
 import { UserProvider } from "./context/UserContext";
 import User from "./pages/User/User";
 

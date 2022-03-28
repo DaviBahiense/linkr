@@ -20,8 +20,10 @@ import {
   UserPostInterac,
   Container,
   StyledLink,
+  Hashtag
 } from "./style";
 import Like from "../../components/like/Like";
+import ReactHashtag from "react-hashtag";
 
 export default function Post(p) {
   const [edit, setEdit] = useState(false);
@@ -109,7 +111,7 @@ export default function Post(p) {
     <PostWrapper>
       <Container>
         <Photo src={p.img} alt="userPhoto" />
-        <Like id = {p.postId} />
+        <Like id={p.postId} />
       </Container>
 
       <PostInfo>
@@ -163,7 +165,17 @@ export default function Post(p) {
             autoFocus
           />
         ) : (
-          <h5>{description || p.description}</h5>
+          <h5>{description ||
+            <ReactHashtag
+              renderHashtag={(hashtag) => (
+                <Hashtag onClick={() => navigate(`/hashtag/${hashtag.substr(1)}`)}>
+                  {hashtag}
+                </Hashtag>
+              )}
+            >
+              {p.description}
+            </ReactHashtag>}
+          </h5>
         )}
         <Metadata>
           <Metainfo>

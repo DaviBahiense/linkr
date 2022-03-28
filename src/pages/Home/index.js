@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
 import api from "../../services/api";
 import TopBar from "./TopBar";
 import useAuth from "../../hooks/useAuth";
@@ -22,7 +21,6 @@ export default function Home() {
   const [formData, setFormData] = useState({ link: "", description: "" });
   const [isLoading, setIsLoading] = useState(false);
   const [loadingPosts, setLoadingPosts] = useState(true);
-  const navigate = useNavigate();
 
   useEffect(() => {
     renderPage();

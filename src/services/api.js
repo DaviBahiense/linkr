@@ -1,6 +1,6 @@
 import axios from "axios";
 
-export const BASE_URL = "https://linkrr.herokuapp.com";
+export const BASE_URL = "http://localhost:5000";
 
 function createConfig(token) {
   return { headers: { Authorization: `Bearer ${token}` } };
@@ -34,6 +34,8 @@ function getPosts(token) {
 function getPostsFromATag(token, tag) {
   const config = createConfig(token);
   const promise = axios.get(`${BASE_URL}/hashtags/${tag}`, config);
+
+  return promise;
 }
 
 function deletePost(id, token) {

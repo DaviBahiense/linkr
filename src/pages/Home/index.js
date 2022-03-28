@@ -3,19 +3,15 @@ import api from "../../services/api";
 import TopBar from "./TopBar";
 import useAuth from "../../hooks/useAuth";
 import {
-  LoadContainer,
   PostContainer,
   Feed,
   NewPost,
-  Posts,
   Photo,
   InputUrl,
   Description,
   Button,
   PostContent
 } from "./style.js";
-import { ThreeDots } from "react-loader-spinner";
-import Post from "./Post";
 import Timeline from "../../components/posts/Timeline";
 
 export default function Home() {

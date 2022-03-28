@@ -1,4 +1,3 @@
-import { Link } from "react-router-dom";
 import styled from "styled-components";
 
 const Metainfo = styled.div`
@@ -128,16 +127,10 @@ const Post = styled.div`
     border-radius: 0px;
   }
 `;
-const Container = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 19px 0px;
-`;
 const Photo = styled.img`
   width: 50px;
   height: 50px;
-  margin-right: 18px;
+  margin-right: 21px;
   margin-top: 16px;
   margin-left: 18px;
   border-radius: 50%;
@@ -278,7 +271,7 @@ const Description = styled.textarea`
   line-height: 18px;
   letter-spacing: 0em;
   text-align: left;
-  color: #4c4c4c;
+  color: #949494;
   margin-bottom: 5px;
   border-radius: 5px;
   background-color: #efefef;
@@ -354,7 +347,7 @@ const PostContent = styled.div`
   }
 `;
 
-const PostLink = styled.a`
+const Link = styled.a`
   all: unset;
   font-family: "Lato";
   font-style: normal;
@@ -384,56 +377,6 @@ const Img = styled.img`
   right: 0;
   top: 0px;
 `;
-const UserPostInterac = styled.div`
-  display: flex;
-  justify-content: space-between;
-  align-items: baseline;
-`;
-const EditDescription = styled.textarea`
-  border: none;
-  height: 66px;
-  width: 502px;
-  border-radius: 5px;
-  background: #efefef;
-  font-family: Lato;
-  font-size: 15px;
-  font-style: normal;
-  font-weight: 300;
-  line-height: 18px;
-  letter-spacing: 0em;
-  text-align: left;
-  color: #949494;
-  margin-bottom: 5px;
-  border-radius: 5px;
-  background-color: #efefef;
-  height: 66px;
-  line-height: 18px;
-  margin-bottom: 5px;
-  padding-top: 8px;
-  padding-left: 12px;
-  resize: none;
-  outline: none;
-  border: none;
-  &::placeholder {
-    color: #949494;
-    font-size: 15px;
-    font-weight: 300;
-  }
-  &:disabled {
-    opacity: 0.5;
-  }
-
-  &:disabled {
-    opacity: 0.5;
-  }
-  @media (max-width: 620px) {
-    width: 100%;
-  }
-`;
-
-const StyledLink = styled(Link)`
-  text-decoration: none;
-`;
 
 const Hashtag = styled.span`
   font-weight: bold;
@@ -456,11 +399,7 @@ export {
   Description,
   Button,
   PostContent,
-  PostLink,
+  Link,
   Img,
-  Hashtag,
-  Container,
-  UserPostInterac,
-  EditDescription,
-  StyledLink,
+  Hashtag
 };

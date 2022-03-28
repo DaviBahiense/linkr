@@ -2,7 +2,7 @@ import Post from "../../pages/Home/Post";
 import { LoadContainer, Posts } from "../../pages/Home/style";
 import { ThreeDots } from "react-loader-spinner";
 
-export default function Timeline({loadingPosts, posts}){
+export default function Timeline({ loadingPosts, posts }) {
     return (
         <Posts>
             {loadingPosts ? (

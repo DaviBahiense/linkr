@@ -32,19 +32,11 @@ export default function Like({id}){
     }
 
     function handleLike(){
-        if(like){
-            api.postLike(auth, id, 'unlike').then(response => {
-                setLike(!like)
-            }).catch(error => {
-                console.error(error.response)
-            })
-        } else {
-            api.postLike(auth, id, 'like').then(response => {
-                setLike(!like)
-            }).catch(error => {
-                console.error(error.response)
-            })
-        }
+        api.postLike(auth, id, `${like?'unlike':'like'}`).then(response => {
+            setLike(!like)
+        }).catch(error => {
+            console.error(error.response)
+        })
     }
 
     useEffect(()=>{

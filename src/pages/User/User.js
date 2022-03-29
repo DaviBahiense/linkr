@@ -7,6 +7,7 @@ import api from "../../services/api";
 import { Feed, PostContainer } from "../Home/style";
 import TopBar from "../../components/TopBar/TopBar.js";
 import { Title } from "./style";
+import Follow from "../../components/Follow/Follow";
 
 export default function User() {
     const [posts, setPosts] = useState([])
@@ -35,8 +36,11 @@ export default function User() {
             <Feed>
                 <PostContainer>
                     <Title >
-                        <img src={userData?.img} alt="userPhoto" />
-                        <h1>{`${userData?.name}'s posts`}</h1>
+                        <div>
+                            <img src={userData?.img} alt="userPhoto" />
+                            <h1>{`${userData?.name}'s posts`}</h1>
+                        </div>
+                        {user.id !== Number(id) && <Follow id={id}/>}
                     </Title>
                     <Timeline posts={posts} loadingPosts={loadingPosts} />
                 </PostContainer>

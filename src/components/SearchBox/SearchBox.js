@@ -2,7 +2,7 @@ import styled from "styled-components";
 import React, { useEffect, useState } from "react";
 import api from "../../services/api";
 import { DebounceInput } from "react-debounce-input";
-import SearchItem from "../SearchItem/SearchItem";
+import SearchItem from "../SearchItem/SearchItem.js";
 import useAuth from "../../hooks/useAuth";
 
 export default function SearchBox() {

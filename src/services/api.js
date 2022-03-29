@@ -1,6 +1,6 @@
 import axios from "axios";
 
-export const BASE_URL = "https://linkrr.herokuapp.com";
+export const BASE_URL = "http://localhost:5000";
 
 function createConfig(token) {
   return { headers: { Authorization: `Bearer ${token}` } };
@@ -81,6 +81,14 @@ function getSearchBarResults(token, search) {
   return result
 }
 
+function postFollow(token, id, type) {
+  return axios.post(`${BASE_URL}/follows/${id}/${type}`, {}, createConfig(token));
+}
+
+function getFollow(token, id) {
+  return axios.get(`${BASE_URL}/follows/${id}`, createConfig(token));
+}
+
 const api = {
   signup,
   login,
@@ -94,7 +102,9 @@ const api = {
   getUserId,
   deletePost,
   getTrendingTags,
-  getSearchBarResults
+  getSearchBarResults,
+  postFollow,
+  getFollow
 };
 
 export default api;

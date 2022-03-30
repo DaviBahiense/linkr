@@ -1,9 +1,8 @@
 import styled from "styled-components";
 import { Link } from "react-router-dom";
-import api from "../../services/api"
+import api from "../../services/api";
 import useAuth from "../../hooks/useAuth";
 import { useEffect, useState } from "react";
-
 
 export default function HashtagBox() {
   const { auth } = useAuth();
@@ -11,15 +10,15 @@ export default function HashtagBox() {
 
   useEffect(() => {
     getTags();
-  }, [])
+  }, []);
 
   async function getTags() {
     try {
-      const tagsList = await api.getTrendingTags(auth)
-      console.log(tagsList.data)
-      setTags(tagsList.data)
+      const tagsList = await api.getTrendingTags(auth);
+      console.log(tagsList.data);
+      setTags(tagsList.data);
     } catch (error) {
-      console.log(error)
+      console.log(error);
     }
   }
 
@@ -30,53 +29,50 @@ export default function HashtagBox() {
       </div>
       <div className="border"></div>
       <div className="tags">
-        {tags.length > 0 ?
-          tags.map(({ tag }) => (
-            <StyledLink to={`/hashtag/${tag}`}>
-              # {tag}
-            </StyledLink>
-          ))
+        {tags.length > 0
+          ? tags.map(({ tag }) => (
+              <StyledLink to={`/hashtag/${tag}`}># {tag}</StyledLink>
+            ))
           : ""}
       </div>
     </Box>
-  )
+  );
 }
 
 const Box = styled.div`
   display: flex;
   flex-direction: column;
-  
+
   background-color: #171717;
   border-radius: 16px;
-  
+
   width: 301px;
   height: 406px;
 
   position: sticky;
   top: 255px;
   right: 210px;
-  
+
   div.trending {
     display: flex;
     height: 61px;
-    
-    color: #FFFFFF;
+
+    color: #ffffff;
 
     span {
       margin-left: 16px;
       margin-top: 9px;
-      
+
       font-weight: 700;
       font-size: 27px;
-      line-height: 40px;  
+      line-height: 40px;
       text-align: center;
       text-overflow: ellipsis;
     }
-
   }
 
   div.border {
-      border: 1px solid #484848;
+    border: 1px solid #484848;
   }
 
   div.tags {
@@ -88,7 +84,7 @@ const Box = styled.div`
     margin-left: 16px;
     gap: 3px;
   }
-`
+`;
 
 const StyledLink = styled(Link)`
   text-decoration: none;
@@ -96,5 +92,5 @@ const StyledLink = styled(Link)`
   line-height: 23px;
   letter-spacing: 0.05em;
 
-  color: #FFFFFF;
-`
+  color: #ffffff;
+`;

@@ -31,6 +31,8 @@ export default function Like({id}){
         textLikes = `${data[0]?.name}, ${data[1]?.name} e ${amountLikes > 3? `outras ${amountLikes - 2} pessoas`:`outra 1 pessoa`}`
     }
 
+    console.log({auth, id})
+
     function handleLike(){
         api.postLike(auth, id, `${like?'unlike':'like'}`).then(response => {
             setLike(!like)

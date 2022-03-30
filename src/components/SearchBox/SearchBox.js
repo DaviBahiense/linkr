@@ -13,6 +13,9 @@ export default function SearchBox() {
 
   async function getSearchBar() {
     try {
+      if(searchText.length < 3){
+        return
+      }
       const users = await api.getSearchBarResults(auth, searchText)
       if (!users) {
         return;

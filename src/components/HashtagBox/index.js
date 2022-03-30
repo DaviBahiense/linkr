@@ -19,7 +19,7 @@ export default function HashtagBox() {
       console.log(tagsList.data)
       setTags(tagsList.data)
     } catch (error) {
-      console.log(error)
+      console.log(error.response)
     }
   }
 

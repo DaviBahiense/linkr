@@ -2,7 +2,7 @@ import styled from "styled-components";
 import React, { useEffect, useState } from "react";
 import api from "../../services/api";
 import { DebounceInput } from "react-debounce-input";
-import SearchItem from "../SearchItem/SearchItem";
+import SearchItem from "../SearchItem/SearchItem.js";
 import useAuth from "../../hooks/useAuth";
 
 export default function SearchBox() {
@@ -13,6 +13,9 @@ export default function SearchBox() {
 
   async function getSearchBar() {
     try {
+      if(searchText.length < 3){
+        return
+      }
       const users = await api.getSearchBarResults(auth, searchText)
       if (!users) {
         return;

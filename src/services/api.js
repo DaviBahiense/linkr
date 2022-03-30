@@ -93,6 +93,18 @@ function getComments(postId) {
   return axios.get(`${BASE_URL}/comment/${postId}`);
 }
 
+function postFollow(token, id, type) {
+  return axios.post(
+    `${BASE_URL}/follows/${id}/${type}`,
+    {},
+    createConfig(token)
+  );
+}
+
+function getFollow(token, id) {
+  return axios.get(`${BASE_URL}/follows/${id}`, createConfig(token));
+}
+
 const api = {
   signup,
   login,
@@ -109,6 +121,8 @@ const api = {
   getSearchBarResults,
   createComment,
   getComments,
+  postFollow,
+  getFollow,
 };
 
 export default api;

@@ -20,16 +20,19 @@ import {
   UserPostInterac,
   Container,
   StyledLink,
-  Hashtag
+  Hashtag,
 } from "./style";
 import Like from "../../components/like/Like";
 import ReactHashtag from "react-hashtag";
+import CommentsIcon from "../../components/Comments/CommentsIcon";
+import Comments from "../../components/Comments";
 
 export default function Post(p) {
   const [edit, setEdit] = useState(false);
   const [user, setUser] = useState("");
   const [modal, setModal] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [comments, setComments] = useState(false);
 
   const { auth } = useAuth();
   const navigate = useNavigate();
@@ -106,89 +109,101 @@ export default function Post(p) {
       alert("Erro ao deletar o post");
     }
   }
-
   return (
-    <PostWrapper>
-      <Container>
-        <Photo src={p.img} alt="userPhoto" />
-        <Like id={p.postId} />
-      </Container>
+    <>
+      <PostWrapper>
+        <Container>
+          <Photo src={p.img} alt="userPhoto" />
+          <Like id={p.postId} />
 
-      <PostInfo>
-        <UserPostInterac>
-          <StyledLink to={`/user/${p.userId}`}>
-            <h2>{p.name}</h2>
-          </StyledLink>
-          <Modal
-            isOpen={modal}
-            onRequestClose={closeModal}
-            style={customStyles}
-          >
-            <h1>
-              Are you sure you want
-              <br /> to delete this post?{" "}
-            </h1>
-            <Form>
-              <Confirm onClick={() => cancelDelete()}>no, go back</Confirm>
-              <Delete
-                onClick={() => handleDeletePost(p.postId)}
-                disabled={isLoading}
-              >
-                {isLoading ? (
-                  <ThreeDots color="#ffffff" height={30} width={30} />
-                ) : (
-                  "yes, delete it"
-                )}
-              </Delete>
-            </Form>
-          </Modal>
-          <div>
-            <TiPencil
-              style={{ color: "white", marginRight: "10px" }}
-              onClick={
-                user.id === p.userId
-                  ? () => (edit ? setEdit(false) : setEdit(true))
-                  : null
-              }
-            />
-            <Bin color="white" onClick={() => openModal()} />
-          </div>
-        </UserPostInterac>
-        {edit ? (
-          <EditDescription
-            {...register("updateDescription")}
-            onSubmit={handleSubmit(EditSubmit)}
-            defaultValue={p.description}
-            type="text"
-            onKeyPress={enterEdit}
-            name="updateDescription"
-            autoFocus
-          />
-        ) : (
-          <h5>{description ||
-            <ReactHashtag
-              renderHashtag={(hashtag) => (
-                <Hashtag onClick={() => navigate(`/hashtag/${hashtag.substr(1)}`)}>
-                  {hashtag}
-                </Hashtag>
-              )}
+          <CommentsIcon onClick={() => setComments(!comments)} />
+        </Container>
+
+        <PostInfo>
+          <UserPostInterac>
+            <StyledLink to={`/user/${p.userId}`}>
+              <h2>{p.name}</h2>
+            </StyledLink>
+            <Modal
+              isOpen={modal}
+              onRequestClose={closeModal}
+              style={customStyles}
             >
-              {p.description}
-            </ReactHashtag>}
-          </h5>
-        )}
-        <Metadata>
-          <Metainfo>
-            <h4>{p.metadataTitle}</h4>
-            <p>{p.metadataDescription}</p>
-            <PostLink href={p.link} target="_blank">
-              {p.link}
-            </PostLink>
-          </Metainfo>
-          <Img src={p.metadataImg}></Img>
-        </Metadata>
-      </PostInfo>
-    </PostWrapper>
+              <h1>
+                Are you sure you want
+                <br /> to delete this post?{" "}
+              </h1>
+              <Form>
+                <Confirm onClick={() => cancelDelete()}>no, go back</Confirm>
+                <Delete
+                  onClick={() => handleDeletePost(p.postId)}
+                  disabled={isLoading}
+                >
+                  {isLoading ? (
+                    <ThreeDots color="#ffffff" height={30} width={30} />
+                  ) : (
+                    "yes, delete it"
+                  )}
+                </Delete>
+              </Form>
+            </Modal>
+            <div>
+              <TiPencil
+                style={{ color: "white", marginRight: "10px" }}
+                onClick={
+                  user.id === p.userId
+                    ? () => (edit ? setEdit(false) : setEdit(true))
+                    : null
+                }
+              />
+              <Bin color="white" onClick={() => openModal()} />
+            </div>
+          </UserPostInterac>
+          {edit ? (
+            <EditDescription
+              {...register("updateDescription")}
+              onSubmit={handleSubmit(EditSubmit)}
+              defaultValue={p.description}
+              type="text"
+              onKeyPress={enterEdit}
+              name="updateDescription"
+              autoFocus
+            />
+          ) : (
+            <h5>
+              {description || (
+                <ReactHashtag
+                  renderHashtag={(hashtag) => (
+                    <Hashtag
+                      onClick={() => navigate(`/hashtag/${hashtag.substr(1)}`)}
+                    >
+                      {hashtag}
+                    </Hashtag>
+                  )}
+                >
+                  {p.description}
+                </ReactHashtag>
+              )}
+            </h5>
+          )}
+          <Metadata>
+            <Metainfo>
+              <h4>{p.metadataTitle}</h4>
+              <p>{p.metadataDescription}</p>
+              <PostLink href={p.link} target="_blank">
+                {p.link}
+              </PostLink>
+            </Metainfo>
+            <Img src={p.metadataImg}></Img>
+          </Metadata>
+        </PostInfo>
+      </PostWrapper>
+      {comments ? (
+        <CommentsContainer>
+          <Comments postOwner={p.user} postId={p.postId} clicked={comments} />
+        </CommentsContainer>
+      ) : null}
+    </>
   );
 }
 
@@ -246,4 +261,16 @@ const Delete = styled.button`
   display: flex;
   align-items: center;
   justify-content: center;
+`;
+
+const CommentsContainer = styled.div`
+  justify-content: start;
+  flex-flow: column nowrap;
+  background-color: #1e1e1e;
+  position: relative;
+  border-radius: 16px;
+  padding-top: 50px;
+  margin-top: -40px;
+  margin-bottom: 44px;
+  z-index: 1;
 `;

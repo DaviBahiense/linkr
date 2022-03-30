@@ -1,6 +1,7 @@
 import axios from "axios";
 
-export const BASE_URL = "https://linkrr.herokuapp.com";
+export const BASE_URL =
+  "http://localhost:5000" || "https://linkrr.herokuapp.com";
 
 function createConfig(token) {
   return { headers: { Authorization: `Bearer ${token}` } };
@@ -40,7 +41,7 @@ function getPostsFromATag(token, tag) {
 
 function getTrendingTags(token) {
   const config = createConfig(token);
-  const promise = axios.get(`${BASE_URL}/hashtags`, config)
+  const promise = axios.get(`${BASE_URL}/hashtags`, config);
 
   return promise;
 }
@@ -76,13 +77,28 @@ function getUserId(token, id) {
 }
 
 function getSearchBarResults(token, search) {
-  const config = createConfig(token)
-  const result = axios.get(`${BASE_URL}/search/${search}`, config)
-  return result
+  const config = createConfig(token);
+  const result = axios.get(`${BASE_URL}/search/${search}`, config);
+  return result;
+}
+
+function createComment(body, token) {
+  const config = createConfig(token);
+  const promise = axios.post(`${BASE_URL}/comment`, body, config);
+
+  return promise;
+}
+
+function getComments(postId) {
+  return axios.get(`${BASE_URL}/comment/${postId}`);
 }
 
 function postFollow(token, id, type) {
-  return axios.post(`${BASE_URL}/follows/${id}/${type}`, {}, createConfig(token));
+  return axios.post(
+    `${BASE_URL}/follows/${id}/${type}`,
+    {},
+    createConfig(token)
+  );
 }
 
 function getFollow(token, id) {
@@ -103,8 +119,10 @@ const api = {
   deletePost,
   getTrendingTags,
   getSearchBarResults,
+  createComment,
+  getComments,
   postFollow,
-  getFollow
+  getFollow,
 };
 
 export default api;

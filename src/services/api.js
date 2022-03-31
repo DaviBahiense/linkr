@@ -31,6 +31,12 @@ function getPosts(token) {
   return promise;
 }
 
+function getAllPosts(token) {
+  const config = createConfig(token);
+  const promise = axios.get(`${BASE_URL}/posts`, config);
+  return promise;
+}
+
 function getPostsFromATag(token, tag) {
   const config = createConfig(token);
   const promise = axios.get(`${BASE_URL}/hashtags/${tag}`, config);
@@ -40,7 +46,7 @@ function getPostsFromATag(token, tag) {
 
 function getTrendingTags(token) {
   const config = createConfig(token);
-  const promise = axios.get(`${BASE_URL}/hashtags`, config)
+  const promise = axios.get(`${BASE_URL}/hashtags`, config);
 
   return promise;
 }
@@ -76,13 +82,17 @@ function getUserId(token, id) {
 }
 
 function getSearchBarResults(token, search) {
-  const config = createConfig(token)
-  const result = axios.get(`${BASE_URL}/search/${search}`, config)
-  return result
+  const config = createConfig(token);
+  const result = axios.get(`${BASE_URL}/search/${search}`, config);
+  return result;
 }
 
 function postFollow(token, id, type) {
-  return axios.post(`${BASE_URL}/follows/${id}/${type}`, {}, createConfig(token));
+  return axios.post(
+    `${BASE_URL}/follows/${id}/${type}`,
+    {},
+    createConfig(token)
+  );
 }
 
 function getFollow(token, id) {
@@ -104,7 +114,8 @@ const api = {
   getTrendingTags,
   getSearchBarResults,
   postFollow,
-  getFollow
+  getFollow,
+  getAllPosts,
 };
 
 export default api;

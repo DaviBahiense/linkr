@@ -30,6 +30,7 @@ export default function Home() {
   const [loadingPosts, setLoadingPosts] = useState(true);
   const [newPosts, setNewPosts] = useState(null);
   const [loadingNew, setLoadingNew] = useState(false);
+  const [oldPosts, setOldPosts] = useState([]);
 
   useEffect(() => {
     renderPage();
@@ -37,7 +38,7 @@ export default function Home() {
 
   useInterval(() => {
     newPostsCounter();
-  }, 15000);
+  }, 3000);
 
   function renderPage() {
     renderPosts();
@@ -52,10 +53,11 @@ export default function Home() {
 
   async function newPostsCounter() {
     try {
-      const { data: postData } = await api.getPosts(auth);
+      const { data: postData } = await api.getAllPosts(auth);
 
-      if (postData.length > posts.length) {
-        let number = postData.length - posts.length;
+      if (postData.length > oldPosts.length) {
+        let number = postData.length - oldPosts.length;
+
         setNewPosts(number);
       }
     } catch (error) {
@@ -100,10 +102,12 @@ export default function Home() {
   async function renderPosts() {
     try {
       const { data: postData } = await api.getPosts(auth);
+      const { data: oldData } = await api.getAllPosts(auth);
 
       setPosts(postData);
       setLoadingPosts(false);
       setLoadingNew(false);
+      setOldPosts(oldData);
     } catch (error) {
       console.log(error);
       if (posts.length !== 0) {

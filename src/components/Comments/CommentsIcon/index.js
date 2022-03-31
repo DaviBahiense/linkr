@@ -1,9 +1,26 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import StyledCommentsIcon from "./styles";
 import { AiOutlineComment } from "react-icons/ai";
+import api from "../../../services/api";
 
-const CommentsIcon = ({ onClick }) => {
-  let commentCount = 1;
+const CommentsIcon = ({ onClick, postId, reload }) => {
+  useEffect(() => {
+    handleComment();
+  }, [reload]);
+
+  const [commentCount, setCommentCount] = useState(null);
+
+  const handleComment = async () => {
+    try {
+      const data = await api.getComments(postId);
+
+      setCommentCount(data.data.length);
+    } catch (error) {
+      console.log(error);
+      alert("Erro, tente novamente");
+    }
+  };
+
   return (
     <div>
       <StyledCommentsIcon>

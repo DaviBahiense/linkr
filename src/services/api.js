@@ -1,7 +1,6 @@
 import axios from "axios";
 
 export const BASE_URL = "http://linkrr.herokuapp.com";
-//link to heroku
 
 function createConfig(token) {
   return { headers: { Authorization: `Bearer ${token}` } };
@@ -105,6 +104,10 @@ function getFollow(token, id) {
   return axios.get(`${BASE_URL}/follows/${id}`, createConfig(token));
 }
 
+function getUserFollow(token) {
+  return axios.get(`${BASE_URL}/follows`, createConfig(token));
+}
+
 const api = {
   signup,
   login,
@@ -123,6 +126,7 @@ const api = {
   getComments,
   postFollow,
   getFollow,
+  getUserFollow,
 };
 
 export default api;

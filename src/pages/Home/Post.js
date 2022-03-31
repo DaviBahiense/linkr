@@ -109,6 +109,7 @@ export default function Post(p) {
       alert("Erro ao deletar o post");
     }
   }
+
   return (
     <>
       <PostWrapper>
@@ -116,7 +117,10 @@ export default function Post(p) {
           <Photo src={p.img} alt="userPhoto" />
           <Like id={p.postId} />
 
-          <CommentsIcon onClick={() => setComments(!comments)} />
+          <CommentsIcon
+            onClick={() => setComments(!comments)}
+            postId={p.postId}
+          />
         </Container>
 
         <PostInfo>
@@ -202,7 +206,7 @@ export default function Post(p) {
       </PostWrapper>
       {comments ? (
         <CommentsContainer>
-          <Comments postOwner={p.user} postId={p.postId} clicked={comments} />
+          <Comments postOwner={p.userId} postId={p.postId} clicked={comments} />
         </CommentsContainer>
       ) : null}
     </>

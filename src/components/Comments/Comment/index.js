@@ -3,12 +3,21 @@ import Avatar from "./Avatar";
 import Container from "./Container";
 import Message from "./Message";
 import useUser from "../../../hooks/useUser";
+import api from "../../../services/api";
+import useAuth from "../../../hooks/useAuth";
 
-const Comment = ({ text, commenter, pic, name }) => {
+const Comment = ({ text, commenter, pic, name, postOwner }) => {
   const { user } = useUser();
   const [follows, setFollows] = useState([]);
+  const { auth } = useAuth();
+  // console.log(commenter);
+  // console.log(postOwner);
 
-  ////
+  useEffect(() => {
+    api.getUserFollow(auth).then((res) => {
+      setFollows(res.data.map((u) => u.id));
+    });
+  }, []);
 
   return (
     <>
@@ -18,9 +27,9 @@ const Comment = ({ text, commenter, pic, name }) => {
         <Container margin="0 18px" height="35px" align="start">
           <div>
             <Message text={name} color="#f3f3f3" size="14px" />
-            {commenter === user.id ? (
+            {commenter === postOwner ? (
               <Message text=" • post’s author" color="#565656" size="14px" />
-            ) : follows.includes(commenter.id) ? (
+            ) : follows.includes(commenter) ? (
               <Message text=" • following" color="#565656" size="14px" />
             ) : null}
           </div>
@@ -28,7 +37,12 @@ const Comment = ({ text, commenter, pic, name }) => {
         </Container>
       </Container>
       <div
-        style={{ height: 1, width: "100%", backgroundColor: "#353535" }}
+        style={{
+          marginLeft: "30px",
+          height: 1,
+          width: "100%",
+          backgroundColor: "#353535",
+        }}
       ></div>
     </>
   );

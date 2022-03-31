@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useState } from "react";
 import useUser from "../../../hooks/useUser";
 import Avatar from "./Avatar";
 import Container from "./Container";
@@ -8,7 +8,7 @@ import Input from "./Input";
 import { FiSend } from "react-icons/fi";
 import api from "../../../services/api";
 
-const CommentWrite = ({ config, postId }) => {
+const CommentWrite = ({ postId, recharge }) => {
   const { user } = useUser();
   const [comment, setComment] = useState("");
   const [disabled, setDisabled] = useState(false);
@@ -60,7 +60,7 @@ const CommentWrite = ({ config, postId }) => {
           }}
         >
           <Button type="submit" width={20} height={20} color="transparent">
-            <FiSend />
+            <FiSend onClick={!recharge} />
           </Button>
         </div>
       </Form>

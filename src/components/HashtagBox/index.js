@@ -4,13 +4,13 @@ import api from "../../services/api";
 import useAuth from "../../hooks/useAuth";
 import { useEffect, useState } from "react";
 
-export default function HashtagBox() {
+export default function HashtagBox({ reload }) {
   const { auth } = useAuth();
   const [tags, setTags] = useState([]);
 
   useEffect(() => {
     getTags();
-  }, []);
+  }, [reload]);
 
   async function getTags() {
     try {
@@ -31,8 +31,8 @@ export default function HashtagBox() {
       <div className="tags">
         {tags.length > 0
           ? tags.map(({ tag }) => (
-              <StyledLink to={`/hashtag/${tag}`}># {tag}</StyledLink>
-            ))
+            <StyledLink to={`/hashtag/${tag}`}># {tag}</StyledLink>
+          ))
           : ""}
       </div>
     </Box>
@@ -51,7 +51,11 @@ const Box = styled.div`
 
   position: sticky;
   top: 255px;
-  right: 210px;
+  right: calc(50vw - (611px/1.3));
+
+  @media (max-width: 835px) {
+    display: none;
+  }
 
   div.trending {
     display: flex;

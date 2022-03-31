@@ -24,6 +24,7 @@ export default function Home() {
   const [formData, setFormData] = useState({ link: "", description: "" });
   const [isLoading, setIsLoading] = useState(false);
   const [loadingPosts, setLoadingPosts] = useState(true);
+  const [loadHashtagBox, setLoadHashtagBox] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -67,6 +68,7 @@ export default function Home() {
       alert("Houve um erro ao publicar seu link");
     }
     setIsLoading(false);
+    setLoadHashtagBox(!loadHashtagBox)
     renderPosts();
   }
 
@@ -129,7 +131,7 @@ export default function Home() {
         </PostContainer>
       </Feed>
 
-      <HashtagBox></HashtagBox>
+      <HashtagBox reload={loadHashtagBox}></HashtagBox>
     </Main>
   );
 }

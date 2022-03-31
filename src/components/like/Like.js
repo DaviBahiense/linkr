@@ -31,17 +31,20 @@ export default function Like({id}){
         textLikes = `${data[0]?.name}, ${data[1]?.name} e ${amountLikes > 3? `outras ${amountLikes - 2} pessoas`:`outra 1 pessoa`}`
     }
 
-    console.log({auth, id})
-
     function handleLike(){
+        const currentLike = like;
+        setLike(!like)
+        currentLike? setAmountLikes(amountLikes-1):setAmountLikes(amountLikes+1)
         api.postLike(auth, id, `${like?'unlike':'like'}`).then(response => {
-            setLike(!like)
+            setLike(!currentLike)
+            handleAmountLikes()
         }).catch(error => {
             console.error(error.response)
+            setLike(currentLike)
         })
     }
 
-    useEffect(()=>{
+    function handleAmountLikes(){
         api.getLikes(auth, id).then(response => {
             setData(response.data)
             setAmountLikes(response.data.length)
@@ -52,13 +55,17 @@ export default function Like({id}){
                 setLike(false);
             }
         })
-    }, [like])
+    }
+
+    useEffect(()=>{
+        handleAmountLikes()
+    }, [])
 
     return (
         <StyledLike>
             {like? <FaHeart onClick={handleLike} color={'#AC0000'} className="icons"/>:
             <FiHeart onClick={handleLike} color={'#FFFFFF'} className="icons"/>}
-            <a data-tip={textLikes}> {amountLikes} {amountLikes > 1? 'likes':'like'} </a>
+            <a data-tip={textLikes}> {amountLikes>=0?amountLikes:0} {amountLikes > 1? 'likes':'like'} </a>
             <ReactTooltip place="bottom" type="light" effect="solid"/>
         </StyledLike>
     )

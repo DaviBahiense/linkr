@@ -1,7 +1,7 @@
 import axios from "axios";
 
 export const BASE_URL =
-  "http://localhost:5000" || "https://linkrr.herokuapp.com";
+  /* "http://localhost:5000" || */ "https://linkrr.herokuapp.com";
 
 function createConfig(token) {
   return { headers: { Authorization: `Bearer ${token}` } };

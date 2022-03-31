@@ -1,3 +1,4 @@
+import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import api from "../../services/api";
 import TopBar from "../../components/TopBar/TopBar.js";
@@ -11,7 +12,7 @@ import {
   Description,
   Button,
   PostContent,
-  Main
+  Main,
 } from "./style.js";
 import Timeline from "../../components/posts/Timeline";
 import HashtagBox from "../../components/HashtagBox";
@@ -23,8 +24,15 @@ export default function Home() {
   const [formData, setFormData] = useState({ link: "", description: "" });
   const [isLoading, setIsLoading] = useState(false);
   const [loadingPosts, setLoadingPosts] = useState(true);
+  const [loadHashtagBox, setLoadHashtagBox] = useState(false);
+  const navigate = useNavigate();
 
   useEffect(() => {
+    if (!auth) {
+      navigate("/");
+      alert("Para a Home, faça primeiro o login");
+      return;
+    }
     renderPage();
   }, []);
 
@@ -60,6 +68,7 @@ export default function Home() {
       alert("Houve um erro ao publicar seu link");
     }
     setIsLoading(false);
+    setLoadHashtagBox(!loadHashtagBox)
     renderPosts();
   }
 
@@ -122,7 +131,7 @@ export default function Home() {
         </PostContainer>
       </Feed>
 
-      <HashtagBox></HashtagBox>
+      <HashtagBox reload={loadHashtagBox}></HashtagBox>
     </Main>
   );
 }

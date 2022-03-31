@@ -6,15 +6,15 @@ import useAuth from "../../hooks/useAuth";
 import {
   PostContainer,
   Feed,
+  Main
 } from "./style.js";
 import Timeline from "../../components/posts/Timeline";
+import HashtagBox from "../../components/HashtagBox";
 
 export default function Home() {
   const { auth } = useAuth();
   const [user, setUser] = useState("");
   const [posts, setPosts] = useState([]);
-  const [formData, setFormData] = useState({ link: "", description: "" });
-  const [isLoading, setIsLoading] = useState(false);
   const [loadingPosts, setLoadingPosts] = useState(true);
   const { hashtag } = useParams();
 
@@ -54,7 +54,7 @@ export default function Home() {
   }
 
   return (
-    <>
+    <Main>
       <TopBar {...user} />
       <Feed>
         <PostContainer>
@@ -62,6 +62,8 @@ export default function Home() {
           <Timeline loadingPosts={loadingPosts} posts={posts} />
         </PostContainer>
       </Feed>
-    </>
+
+      <HashtagBox></HashtagBox>
+    </Main>
   );
 }

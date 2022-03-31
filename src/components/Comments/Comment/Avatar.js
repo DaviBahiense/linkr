@@ -2,12 +2,10 @@ import styled from "styled-components";
 import { Link } from "react-router-dom";
 import useUser from "../../../hooks/useUser";
 
-export default function Avatar() {
-  const { user } = useUser();
-
+export default function Avatar(user) {
   return (
-    <Link to={`/user/${user.Avatarid}`}>
-      <Logo src="https://picsum.photos/200" />
+    <Link to={`/user/${user.id}`}>
+      <Logo src={user.avatar} />
     </Link>
   );
 }

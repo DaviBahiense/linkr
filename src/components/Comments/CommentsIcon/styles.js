@@ -17,7 +17,7 @@ const StyledCommentsIcon = styled.div`
     cursor: pointer;
   }
 
-  @media (min-width: 375px) {
+  @media (min-width: 600px) {
     p {
       font-size: 11px;
     }

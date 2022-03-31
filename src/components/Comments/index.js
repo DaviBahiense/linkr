@@ -3,15 +3,14 @@ import { ThreeDots } from "react-loader-spinner";
 import Container from "./Comment/Container";
 import Comment from "./Comment";
 import CommentWrite from "./Comment/CommentWrite";
-import useUser from "../../hooks/useUser";
 import api from "../../services/api";
 
-const Comments = ({ postId, clicked }) => {
+const Comments = ({ postOwner, postId, clicked }) => {
   const [comments, setComments] = useState(null);
-  const { user } = useUser();
+
   useEffect(() => {
     handleComment();
-  }, []);
+  }, [clicked]);
 
   const handleComment = async () => {
     try {
@@ -28,7 +27,7 @@ const Comments = ({ postId, clicked }) => {
     <>
       <Container>
         {comments === null ? (
-          <ThreeDots type="ThreeDots" color="#00BFFF" height={50} width={50} />
+          <ThreeDots color="#00BFFF" height={50} width={50} />
         ) : comments[0] ? (
           comments.map((c, i) => (
             <Comment
@@ -37,12 +36,13 @@ const Comments = ({ postId, clicked }) => {
               commenter={c.userId}
               name={c.name}
               key={i}
+              postOwner={postOwner}
             />
           ))
         ) : (
           <span text="Ainda não há comentários" color="white" />
         )}
-        <CommentWrite postId={postId} />
+        <CommentWrite postId={postId} recharge={clicked} />
       </Container>
     </>
   );

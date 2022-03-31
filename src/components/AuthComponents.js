@@ -10,7 +10,7 @@ const Container = styled.div`
   align-items: center;
   justify-content: center;
 
-  @media (max-width: 414px) {
+  @media (max-width: 600px) {
     flex-direction: column;
   }
 `;
@@ -22,7 +22,7 @@ const Welcome = styled.div`
   justify-content: center;
   flex-direction: column;
 
-  @media (max-width: 414px) {
+  @media (max-width: 600px) {
     height: 175px;
   }
 
@@ -31,7 +31,7 @@ const Welcome = styled.div`
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-    @media (max-width: 414px) {
+    @media (max-width: 600px) {
       margin-left: 0px;
       align-items: center;
     }
@@ -46,7 +46,7 @@ const Welcome = styled.div`
     letter-spacing: 0.05em;
     text-align: left;
     color: #ffffff;
-    @media (max-width: 414px) {
+    @media (max-width: 600px) {
       margin-bottom: -10px;
       font-size: 76px;
       line-height: 84px;
@@ -61,7 +61,7 @@ const Welcome = styled.div`
     letter-spacing: 0em;
     text-align: left;
     color: #ffffff;
-    @media (max-width: 414px) {
+    @media (max-width: 600px) {
       font-size: 23px;
       line-height: 34px;
     }
@@ -79,7 +79,7 @@ const Form = styled.form`
   p {
     color: whitesmoke;
   }
-  @media (max-width: 414px) {
+  @media (max-width: 600px) {
     margin-top: 40px;
   }
 `;
@@ -97,7 +97,7 @@ const Input = styled.input`
   line-height: 40px;
   font-family: Oswald;
 
-  @media (max-width: 414px) {
+  @media (max-width: 600px) {
     width: 330px;
     height: 55px;
     font-size: 22px;
@@ -126,7 +126,7 @@ const Button = styled.button`
   background: #1877f2;
   color: #fff;
 
-  @media (max-width: 414px) {
+  @media (max-width: 600px) {
     width: 330px;
     height: 55px;
     font-size: 22px;
@@ -143,7 +143,7 @@ const StyledLink = styled(Link)`
   font-family: Lato;
   text-decoration-line: underline;
 
-  @media (max-width: 414px) {
+  @media (max-width: 600px) {
     font-size: 17px;
     line-height: 20px;
   }

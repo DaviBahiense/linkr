@@ -66,7 +66,7 @@ const Feed = styled.div`
     color: #ffffff;
     @media (max-width: 620px) {
       margin: 0px 17px 17px 17px;
-      margin-top: 91px;
+      margin-top: 150px;
     }
   }
   h3 {

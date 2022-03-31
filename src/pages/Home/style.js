@@ -1,6 +1,40 @@
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 
+const NewCounter = styled.div`
+  display: flex;
+  flex-direction: row;
+  width: 200px;
+  background-color: #1877f2;
+  box-shadow: 0px 4px 4px 0px #00000040;
+  height: 61px;
+  align-items: center;
+  justify-content: center;
+  width: 611px;
+
+  border-radius: 16px;
+  margin-top: 11px;
+  margin-bottom: 17px;
+
+  @media (max-width: 620px) {
+    width: 100vw;
+    border-radius: 0px;
+  }
+
+  h1 {
+    font-family: Lato;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 19px;
+    letter-spacing: 0em;
+    text-align: left;
+    color: #ffffff;
+    margin-right: 14px;
+  }
+`;
+
+const LoaderNew = styled.div``;
 const Metainfo = styled.div`
   width: 65%;
   height: 100%;
@@ -356,6 +390,10 @@ const PostContent = styled.div`
     margin-left: 15px;
   }
 `;
+const PostLinkBox = styled.a`
+  all: unset;
+  cursor: pointer;
+`;
 
 const PostLink = styled.a`
   all: unset;
@@ -442,11 +480,11 @@ const Hashtag = styled.span`
   font-weight: bold;
   color: #fff;
   cursor: pointer;
-`
+`;
 
 const Main = styled.div`
   display: flex;
-`
+`;
 
 export {
   Metainfo,
@@ -470,5 +508,8 @@ export {
   UserPostInterac,
   EditDescription,
   StyledLink,
-  Main
+  Main,
+  NewCounter,
+  LoaderNew,
+  PostLinkBox,
 };

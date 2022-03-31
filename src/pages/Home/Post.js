@@ -20,7 +20,8 @@ import {
   UserPostInterac,
   Container,
   StyledLink,
-  Hashtag
+  Hashtag,
+  PostLinkBox,
 } from "./style";
 import Like from "../../components/like/Like";
 import ReactHashtag from "react-hashtag";
@@ -165,27 +166,33 @@ export default function Post(p) {
             autoFocus
           />
         ) : (
-          <h5>{description ||
-            <ReactHashtag
-              renderHashtag={(hashtag) => (
-                <Hashtag onClick={() => navigate(`/hashtag/${hashtag.substr(1)}`)}>
-                  {hashtag}
-                </Hashtag>
-              )}
-            >
-              {p.description}
-            </ReactHashtag>}
+          <h5>
+            {description || (
+              <ReactHashtag
+                renderHashtag={(hashtag) => (
+                  <Hashtag
+                    onClick={() => navigate(`/hashtag/${hashtag.substr(1)}`)}
+                  >
+                    {hashtag}
+                  </Hashtag>
+                )}
+              >
+                {p.description}
+              </ReactHashtag>
+            )}
           </h5>
         )}
         <Metadata>
-          <Metainfo>
-            <h4>{p.metadataTitle}</h4>
-            <p>{p.metadataDescription}</p>
-            <PostLink href={p.link} target="_blank">
-              {p.link}
-            </PostLink>
-          </Metainfo>
-          <Img src={p.metadataImg}></Img>
+          <PostLinkBox href={p.link} target="_blank">
+            <Metainfo>
+              <h4>{p.metadataTitle}</h4>
+              <p>{p.metadataDescription}</p>
+              <PostLink href={p.link} target="_blank">
+                {p.link}
+              </PostLink>
+            </Metainfo>
+            <Img src={p.metadataImg}></Img>
+          </PostLinkBox>
         </Metadata>
       </PostInfo>
     </PostWrapper>

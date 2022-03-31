@@ -2,6 +2,9 @@ import { useEffect, useState } from "react";
 import api from "../../services/api";
 import TopBar from "../../components/TopBar/TopBar.js";
 import useAuth from "../../hooks/useAuth";
+import useInterval from "react-useinterval";
+import { TailSpin } from "react-loader-spinner";
+import { FaSyncAlt } from "react-icons/fa";
 import {
   PostContainer,
   Feed,
@@ -11,7 +14,9 @@ import {
   Description,
   Button,
   PostContent,
-  Main
+  Main,
+  NewCounter,
+  LoaderNew,
 } from "./style.js";
 import Timeline from "../../components/posts/Timeline";
 import HashtagBox from "../../components/HashtagBox";
@@ -23,14 +28,39 @@ export default function Home() {
   const [formData, setFormData] = useState({ link: "", description: "" });
   const [isLoading, setIsLoading] = useState(false);
   const [loadingPosts, setLoadingPosts] = useState(true);
+  const [newPosts, setNewPosts] = useState(null);
+  const [loadingNew, setLoadingNew] = useState(false);
 
   useEffect(() => {
     renderPage();
   }, []);
 
+  useInterval(() => {
+    newPostsCounter();
+  }, 15000);
+
   function renderPage() {
     renderPosts();
     handleUser();
+  }
+
+  function refreshPage() {
+    renderPosts();
+    setNewPosts(null);
+    setLoadingNew(true);
+  }
+
+  async function newPostsCounter() {
+    try {
+      const { data: postData } = await api.getPosts(auth);
+
+      if (postData.length > posts.length) {
+        let number = postData.length - posts.length;
+        setNewPosts(number);
+      }
+    } catch (error) {
+      console.log(error);
+    }
   }
 
   async function handleUser() {
@@ -60,7 +90,7 @@ export default function Home() {
       alert("Houve um erro ao publicar seu link");
     }
     setIsLoading(false);
-    renderPosts();
+    // renderPosts();
   }
 
   function handleInputChange(e) {
@@ -73,6 +103,7 @@ export default function Home() {
 
       setPosts(postData);
       setLoadingPosts(false);
+      setLoadingNew(false);
     } catch (error) {
       console.log(error);
       if (posts.length !== 0) {
@@ -117,8 +148,25 @@ export default function Home() {
                 </Button>
               </PostContent>
             </NewPost>
-          </form>
+          </form>{" "}
+          {newPosts !== null ? (
+            <NewCounter>
+              <h1>{newPosts} new posts, load more!</h1>
+              <FaSyncAlt color="white" onClick={() => refreshPage()} />{" "}
+            </NewCounter>
+          ) : (
+            ""
+          )}
           <Timeline loadingPosts={loadingPosts} posts={posts} />
+          {loadingNew ? (
+            <LoaderNew>
+              {" "}
+              <TailSpin color="#ffffff" height={30} width={30} />
+              <h1>"Loading more posts..."</h1>
+            </LoaderNew>
+          ) : (
+            ""
+          )}
         </PostContainer>
       </Feed>
 

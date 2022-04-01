@@ -10,9 +10,12 @@ const StyledLike = styled.div`
     .icons{
         width: 20px;
         height: 20px;
+        ${(props) => props.block && "pointer-events: none;"}
     }
 
     a{
+        font-size: 11px;
+        line-height:13.2px;
         color: #ffffff;
     }
 `;

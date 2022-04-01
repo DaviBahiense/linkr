@@ -3,6 +3,7 @@ import Post from "../../pages/Home/Post";
 import { ContainerRepost, InfoRepost, LinkSpan } from "./styleRepost";
 
 export default function Repost (p){
+    
     return(
         <ContainerRepost>
             <InfoRepost>

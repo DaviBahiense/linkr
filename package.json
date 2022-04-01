@@ -25,6 +25,7 @@
     "react-tooltip": "^4.2.21",
     "react-useinterval": "^1.0.2",
     "styled-components": "^5.3.3",
+    "sweetalert2": "^11.4.8",
     "web-vitals": "^2.1.4",
     "yup": "^0.32.11"
   },

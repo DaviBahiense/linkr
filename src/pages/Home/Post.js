@@ -21,6 +21,7 @@ import {
   Container,
   StyledLink,
   Hashtag,
+  PostLinkBox,
 } from "./style";
 import Like from "../../components/like/Like";
 import ReactHashtag from "react-hashtag";

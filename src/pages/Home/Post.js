@@ -155,17 +155,19 @@ export default function Post(p) {
                 </Delete>
               </Form>
             </Modal>
-            <div>
-              <TiPencil
-                style={{ color: "white", marginRight: "10px" }}
-                onClick={
-                  user.id === p.userId
-                    ? () => (edit ? setEdit(false) : setEdit(true))
-                    : null
-                }
-              />
-              <Bin color="white" onClick={() => openModal()} />
-            </div>
+            {p.userId === user.id && (
+              <div>
+                <TiPencil
+                  style={{ color: "white", marginRight: "10px" }}
+                  onClick={
+                    user.id === p.userId
+                      ? () => (edit ? setEdit(false) : setEdit(true))
+                      : null
+                  }
+                />
+                <Bin color="white" onClick={() => openModal()} />
+              </div>
+            )}
           </UserPostInterac>
           {edit ? (
             <EditDescription

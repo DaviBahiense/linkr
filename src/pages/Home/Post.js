@@ -136,7 +136,6 @@ export default function Post(p) {
               isOpen={modal}
               onRequestClose={closeModal}
               style={customStyles}
-              data-backdrop="false"
             >
               <h1>
                 Are you sure you want

@@ -10,6 +10,7 @@ import { Title } from "./style";
 import Follow from "../../components/Follow/Follow";
 import HashtagBox from "../../components/HashtagBox";
 import { Main } from "../Hashtag/style";
+import SearchBox from "../../components/SearchBox/SearchBox";
 
 export default function User() {
     const [posts, setPosts] = useState([])
@@ -24,18 +25,23 @@ export default function User() {
         setUserData(data)
     }
 
-    useEffect(handleUser, [])
-
-    useEffect(() => {
+    async function renderPage() {
         api.getPosts(auth).then(response => {
             setPosts(response.data.filter(element => element.userId === Number(id)));
             setLoadingPosts(false);
         })
+    }
+
+    useEffect(() => {
+        renderPage()
+        handleUser();
     }, [id])
+
     return (
         <Main>
             <TopBar {...user} />
             <Feed>
+                <SearchBox type={"timeline"}></SearchBox>
                 <PostContainer>
                     <Title >
                         <div>
@@ -47,7 +53,7 @@ export default function User() {
                     <Timeline posts={posts} loadingPosts={loadingPosts} />
                 </PostContainer>
             </Feed>
-            <HashtagBox />
+            <HashtagBox reloadPosts={renderPage} />
         </Main>
     )
 }

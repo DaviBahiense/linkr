@@ -30,7 +30,7 @@ export default function TopBar(user) {
           <h1>linkr</h1>
         </Link>
 
-        <SearchBox></SearchBox>
+        <SearchBox type={"header"}></SearchBox>
 
         <User>
           {selected ? (

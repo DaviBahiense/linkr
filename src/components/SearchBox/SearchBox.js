@@ -6,7 +6,7 @@ import SearchItem from "../SearchItem/SearchItem.js";
 import useAuth from "../../hooks/useAuth";
 import useUser from "../../hooks/useUser";
 
-export default function SearchBox() {
+export default function SearchBox({ type }) {
   const [searchText, setSearchText] = useState("");
   const [data, setData] = useState(null);
   const { auth } = useAuth();
@@ -51,7 +51,7 @@ export default function SearchBox() {
   useEffect(getSearchBar, [searchText]);
 
   return (
-    <Container>
+    <Container type={type}>
       <div className="input-search-bar">
         <DebounceInput
           minLength={3}
@@ -127,6 +127,15 @@ const Container = styled.div`
   .hide-result {
     display: none;
   }
+
+  ${({ type }) => type === "header" ?
+    `
+    @media (max-width: 600px) {
+        display: none;
+    }
+    `: ``
+  }
+
 `;
 
 const SearchBarResults = styled.div`

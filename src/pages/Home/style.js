@@ -122,7 +122,7 @@ const Feed = styled.div`
     color: #ffffff;
     @media (max-width: 620px) {
       margin: 0px 17px 17px 17px;
-      margin-top: 91px;
+      margin-top: 150px;
     }
   }
   h3 {
@@ -178,6 +178,8 @@ const Post = styled.div`
   height: 100%;
   width: 611px;
 
+  position: relative;
+  z-index: 2;
   border-radius: 16px;
   background: #171717;
   margin-bottom: 16px;

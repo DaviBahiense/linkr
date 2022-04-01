@@ -10,21 +10,22 @@ export default function SearchBox() {
   const [data, setData] = useState(null);
   const { auth } = useAuth();
 
-
   async function getSearchBar() {
     try {
-      const users = await api.getSearchBarResults(auth, searchText)
+      if (searchText.length < 3) {
+        return;
+      }
+      const users = await api.getSearchBarResults(auth, searchText);
       if (!users) {
         return;
       }
 
-      setData([...users.data])
-    }
-    catch (error) {
+      setData([...users.data]);
+    } catch (error) {
       console.log(error);
     }
-  } useEffect(getSearchBar, [searchText]);
-
+  }
+  useEffect(getSearchBar, [searchText]);
 
   return (
     <Container>
@@ -35,7 +36,6 @@ export default function SearchBox() {
           placeholder="Search for people and friends"
           onChange={(e) => setSearchText(e.target.value)}
         />
-
       </div>
       <SearchBarResults
         className={searchText.length >= 3 ? "show-result" : "hide-result"}
@@ -50,7 +50,7 @@ export default function SearchBox() {
 
 const Container = styled.div`
   display: flex;
-  width: 563px;
+  width: 40vw;
   height: 45px;
   flex-direction: column;
   justify-content: center;
@@ -74,7 +74,6 @@ const Container = styled.div`
       @media (max-width: 600px) {
         right: 30px;
       }
-
     }
 
     @media (max-width: 600px) {

@@ -383,6 +383,9 @@ const Hashtag = styled.span`
   color: #fff;
   cursor: pointer;
 `
+const Main = styled.div`
+  display: flex;
+`;
 
 export {
   Metainfo,
@@ -401,5 +404,6 @@ export {
   PostContent,
   Link,
   Img,
-  Hashtag
+  Hashtag,
+  Main
 };

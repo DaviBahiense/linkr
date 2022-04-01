@@ -1,3 +1,4 @@
+import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import api from "../../services/api";
 import TopBar from "../../components/TopBar/TopBar.js";
@@ -31,8 +32,15 @@ export default function Home() {
   const [newPosts, setNewPosts] = useState(null);
   const [loadingNew, setLoadingNew] = useState(false);
   const [oldPosts, setOldPosts] = useState([]);
+  const [loadHashtagBox, setLoadHashtagBox] = useState(false);
+  const navigate = useNavigate();
 
   useEffect(() => {
+    if (!auth) {
+      navigate("/");
+      alert("Para a Home, faça primeiro o login");
+      return;
+    }
     renderPage();
   }, []);
 
@@ -102,6 +110,7 @@ export default function Home() {
       alert("Houve um erro ao publicar seu link");
     }
     setIsLoading(false);
+    setLoadHashtagBox(!loadHashtagBox)
     renderPosts();
   }
 
@@ -189,7 +198,7 @@ export default function Home() {
         </PostContainer>
       </Feed>
 
-      <HashtagBox></HashtagBox>
+      <HashtagBox reload={loadHashtagBox}></HashtagBox>
     </Main>
   );
 }

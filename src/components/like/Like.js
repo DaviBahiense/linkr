@@ -52,7 +52,7 @@ export default function Like({ id }) {
         api.getLikes(auth, id).then(response => {
             setData(response.data)
             setAmountLikes(response.data.length)
-            const likeUser = response.data?.find(element => element.id === user.id)
+            const likeUser = response?.data.find(element => element.id === user.id)
             if(likeUser){
                 setLike(true)
             } else {

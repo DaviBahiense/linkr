@@ -33,10 +33,11 @@ export default function Register() {
       setIsLoading(false);
       navigate("/");
     } catch (error) {
-      if (error.response.status === 409) {
+      setIsLoading(false);
+      /*if (error.response.status === 409) {
         alert("Usuário já cadastrado")
         setIsLoading(false);
-      }
+      }*/
       console.log(error)
     }
   }

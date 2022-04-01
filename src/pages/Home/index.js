@@ -79,7 +79,6 @@ export default function Home() {
   async function renderPosts() {
     try {
       const { data: postData } = await api.getPosts(auth);
-
       setPosts(postData);
       setLoadingPosts(false);
     } catch (error) {

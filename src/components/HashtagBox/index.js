@@ -15,7 +15,6 @@ export default function HashtagBox({ reload }) {
   async function getTags() {
     try {
       const tagsList = await api.getTrendingTags(auth);
-      console.log(tagsList.data);
       setTags(tagsList.data);
     } catch (error) {
       console.log(error.response);

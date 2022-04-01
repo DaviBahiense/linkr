@@ -50,20 +50,10 @@ const CommentWrite = ({ postId, setReload, reload }) => {
           fSize="14px"
           data={{ value: comment, setValue: setComment }}
         />
-        <div
-          style={{
-            position: "absolute",
-            right: 25,
-            height: 60,
-            display: "flex",
-            flexFlow: "column nowrap",
-            justifyContent: "center",
-          }}
-        >
-          <Button type="submit" width={20} height={20} color="transparent">
-            <FiSend />
-          </Button>
-        </div>
+
+        <Button type="submit" width={20} height={20} color="transparent">
+          <FiSend />
+        </Button>
       </Form>
     </Container>
   );

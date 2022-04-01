@@ -59,6 +59,8 @@ const StyledButton = styled.button`
   font-family: ${(props) => (props.font ? props.font : "inherit")};
   font-weight: ${(props) => (props.fWeight ? props.fWeight : "400")};
   font-size: ${(props) => (props.fSize ? props.fSize : 21)}px;
+  position: relative;
+  right: 5px;
 
   &:disabled {
     opacity: 70%;

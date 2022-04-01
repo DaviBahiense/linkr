@@ -5,12 +5,12 @@ import Comment from "./Comment";
 import CommentWrite from "./Comment/CommentWrite";
 import api from "../../services/api";
 
-const Comments = ({ postOwner, postId, clicked }) => {
+const Comments = ({ postOwner, postId, setReload, reload }) => {
   const [comments, setComments] = useState(null);
 
   useEffect(() => {
     handleComment();
-  }, [clicked]);
+  }, [reload]);
 
   const handleComment = async () => {
     try {
@@ -42,7 +42,7 @@ const Comments = ({ postOwner, postId, clicked }) => {
         ) : (
           <span text="Ainda não há comentários" color="white" />
         )}
-        <CommentWrite postId={postId} recharge={clicked} />
+        <CommentWrite postId={postId} setReload={setReload} reload={reload} />
       </Container>
     </>
   );

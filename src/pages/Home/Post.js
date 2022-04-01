@@ -21,6 +21,7 @@ import {
   Container,
   StyledLink,
   Hashtag,
+  PostLinkBox,
 } from "./style";
 import Like from "../../components/like/Like";
 import ReactHashtag from "react-hashtag";
@@ -35,7 +36,8 @@ export default function Post(p) {
   const [modal, setModal] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [comments, setComments] = useState(false);
-  //const { user } = useUser();
+  const [reload, setReload] = useState(false);
+
   const { auth } = useAuth();
   const navigate = useNavigate();
 
@@ -119,8 +121,11 @@ export default function Post(p) {
           <Photo src={p.img} alt="userPhoto" />
           <Like id={p.postId} />
           <CommentsIcon
-            onClick={() => setComments(!comments)}
+            onClick={() => {
+              setComments(!comments);
+            }}
             postId={p.postId}
+            reload={reload}
           />
           <Share id={p.postId}/>
         </Container>
@@ -207,7 +212,12 @@ export default function Post(p) {
       </PostWrapper>
       {comments ? (
         <CommentsContainer>
-          <Comments postOwner={p.userId} postId={p.postId} clicked={comments} />
+          <Comments
+            postOwner={p.userId}
+            postId={p.postId}
+            setReload={setReload}
+            reload={reload}
+          />
         </CommentsContainer>
       ) : null}
     </>
@@ -274,10 +284,9 @@ const CommentsContainer = styled.div`
   justify-content: start;
   flex-flow: column nowrap;
   background-color: #1e1e1e;
-  position: relative;
+
   border-radius: 16px;
   padding-top: 50px;
   margin-top: -40px;
   margin-bottom: 44px;
-  z-index: 1;
 `;

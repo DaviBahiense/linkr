@@ -27,6 +27,8 @@ const Container = styled.span`
     display: flex;
     align-items: center;
 
+    cursor: pointer;
+
     :last-child{
         padding-bottom: 20px;
         border-end-end-radius: 8px;

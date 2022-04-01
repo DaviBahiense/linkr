@@ -10,6 +10,7 @@ import {
 } from "./style.js";
 import Timeline from "../../components/posts/Timeline";
 import HashtagBox from "../../components/HashtagBox";
+import SearchBox from "../../components/SearchBox/SearchBox";
 
 export default function Home() {
   const { auth } = useAuth();
@@ -57,6 +58,7 @@ export default function Home() {
     <Main>
       <TopBar {...user} />
       <Feed>
+        <SearchBox type={"timeline"}></SearchBox>
         <PostContainer>
           <h1 className="head">#hashtag</h1>
           <Timeline loadingPosts={loadingPosts} posts={posts} reload={renderPosts} />

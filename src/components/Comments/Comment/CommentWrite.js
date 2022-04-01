@@ -22,15 +22,19 @@ const CommentWrite = ({ postId, setReload, reload }) => {
       comment: comment,
     };
 
-    try {
-      api.createComment(body);
-      setComment("");
-      setReload(!reload);
-    } catch (error) {
-      console.log(error);
-      alert("Erro ao criar commentario");
-    }
-    setDisabled(false);
+    api
+      .createComment(body)
+      .then(() => {
+        setComment("");
+        setReload(!reload);
+        setDisabled(false);
+      })
+      .catch((error) => {
+        console.log(error);
+        alert("Erro ao criar commentario");
+        setReload(!reload);
+        setDisabled(false);
+      });
   };
 
   return (

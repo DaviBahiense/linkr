@@ -31,7 +31,7 @@ export default function User() {
             setPosts(response.data.filter(element => element.userId === Number(id)));
             setLoadingPosts(false);
         })
-    }, [])
+    }, [id])
     return (
         <Main>
             <TopBar {...user} />
@@ -42,7 +42,7 @@ export default function User() {
                             <img src={userData?.img} alt="userPhoto" />
                             <h1>{`${userData?.name}'s posts`}</h1>
                         </div>
-                        {user.id !== Number(id) && <Follow id={id}/>}
+                        {user.id !== Number(id) && <Follow id={id} />}
                     </Title>
                     <Timeline posts={posts} loadingPosts={loadingPosts} />
                 </PostContainer>

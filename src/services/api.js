@@ -114,6 +114,10 @@ function getUserFollow(token) {
   return axios.get(`${BASE_URL}/follows`, createConfig(token));
 }
 
+async function verifyFollow(token, followerId, userId) {
+  return await axios.get(`${BASE_URL}/search/verifyFollow/${followerId}/${userId}`, createConfig(token))
+}
+
 function postRepost(token, id, type) {
   return axios.post(`${BASE_URL}/reposts/${id}/${type}`, {}, createConfig(token));
 }
@@ -141,6 +145,7 @@ const api = {
   postFollow,
   getFollow,
   getUserFollow,
+  verifyFollow,
   postRepost,
   getReposts,
 };

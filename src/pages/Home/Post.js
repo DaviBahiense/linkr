@@ -31,6 +31,7 @@ import Share from "../../components/Share/Share";
 import useUser from "../../hooks/useUser";
 
 export default function Post(p) {
+
   const [edit, setEdit] = useState(false);
   const [user, setUser] = useState("");
   const [modal, setModal] = useState(false);
@@ -102,7 +103,6 @@ export default function Post(p) {
   }
 
   async function handleDeletePost(id) {
-    console.log(id);
     setModal(false);
     setIsLoading(true);
     try {
@@ -187,7 +187,11 @@ export default function Post(p) {
                 <ReactHashtag
                   renderHashtag={(hashtag) => (
                     <Hashtag
-                      onClick={() => navigate(`/hashtag/${hashtag.substr(1)}`)}
+                      onClick={() => {
+                        p.reload();
+                        navigate(`/hashtag/${hashtag.substr(1)}`)
+                      }
+                      }
                     >
                       {hashtag}
                     </Hashtag>

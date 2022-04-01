@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import api from "../../services/api";
 import TopBar from "../../components/TopBar/TopBar.js";
 import useAuth from "../../hooks/useAuth";
@@ -33,6 +33,7 @@ export default function Home() {
   const [loadingNew, setLoadingNew] = useState(false);
   const [oldPosts, setOldPosts] = useState([]);
   const [loadHashtagBox, setLoadHashtagBox] = useState(false);
+
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -58,6 +59,7 @@ export default function Home() {
     setNewPosts(null);
     setLoadingNew(true);
     setLoadingPosts(false);
+    window.location.reload();
   }
 
   async function newPostsCounter() {
@@ -110,8 +112,9 @@ export default function Home() {
       alert("Houve um erro ao publicar seu link");
     }
     setIsLoading(false);
-    setLoadHashtagBox(!loadHashtagBox)
+    setLoadHashtagBox(!loadHashtagBox);
     renderPosts();
+    window.location.reload();
   }
 
   function handleInputChange(e) {

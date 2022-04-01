@@ -41,16 +41,14 @@ const LoaderNew = styled.div`
   width: 611px;
   justify-content: center;
   align-items: center;
-
-  h1 {
-    color: #6d6d6d;
+  h6 {
     font-family: Lato;
     font-size: 22px;
     font-weight: 400;
     line-height: 26px;
     letter-spacing: 0.05em;
     text-align: left;
-    margin-top: 16px;
+    color: #6d6d6d;
   }
 
   @media (max-width: 620px) {

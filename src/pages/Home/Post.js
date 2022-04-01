@@ -99,7 +99,6 @@ export default function Post(p) {
   }
 
   async function handleDeletePost(id) {
-    console.log(id);
     setModal(false);
     setIsLoading(true);
     try {

@@ -10,8 +10,6 @@ const Comment = ({ text, commenter, pic, name, postOwner }) => {
   const { user } = useUser();
   const [follows, setFollows] = useState([]);
   const { auth } = useAuth();
-  // console.log(commenter);
-  // console.log(postOwner);
 
   useEffect(() => {
     api.getUserFollow(auth).then((res) => {

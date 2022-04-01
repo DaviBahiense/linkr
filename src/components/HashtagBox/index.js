@@ -16,8 +16,8 @@ export default function HashtagBox({ reload, reloadPosts }) {
   async function getTags() {
     try {
       const tagsList = await api.getTrendingTags(auth);
-      console.log(tagsList.data);
       setTags(tagsList.data);
+
     } catch (error) {
       console.log(error.response);
     }
@@ -31,11 +31,13 @@ export default function HashtagBox({ reload, reloadPosts }) {
       <div className="border"></div>
       <div className="tags">
         {tags.length > 0
-          ? tags.map(({ tag }) => (
-            <StyledLink onClick={() => {
-              reloadPosts()
-              navigate(`/hashtag/${tag}`)
-            }}># {tag}
+          ? tags.map(({ tag }, i) => (
+            <StyledLink
+              key={i}
+              onClick={() => {
+                reloadPosts()
+                navigate(`/hashtag/${tag}`)
+              }}># {tag}
             </StyledLink>
           ))
           : ""}
@@ -100,6 +102,8 @@ const StyledLink = styled.span`
   font-size: 19px;
   line-height: 23px;
   letter-spacing: 0.05em;
+
+  cursor: pointer;
 
   color: #ffffff;
 `;

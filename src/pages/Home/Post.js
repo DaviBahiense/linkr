@@ -187,9 +187,7 @@ export default function Post(p) {
             <Metainfo>
               <h4>{p.metadataTitle}</h4>
               <p>{p.metadataDescription}</p>
-              <PostLink href={p.link} target="_blank">
-                {p.link}
-              </PostLink>
+              <PostLink>{p.link}</PostLink>
             </Metainfo>
             <Img src={p.metadataImg}></Img>
           </PostLinkBox>

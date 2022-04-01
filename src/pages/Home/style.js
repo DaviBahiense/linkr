@@ -4,7 +4,7 @@ import styled from "styled-components";
 const NewCounter = styled.div`
   display: flex;
   flex-direction: row;
-  width: 200px;
+
   background-color: #1877f2;
   box-shadow: 0px 4px 4px 0px #00000040;
   height: 61px;
@@ -34,7 +34,29 @@ const NewCounter = styled.div`
   }
 `;
 
-const LoaderNew = styled.div``;
+const LoaderNew = styled.div`
+  display: flex;
+  flex-direction: column;
+  height: 244px;
+  width: 611px;
+  justify-content: center;
+  align-items: center;
+
+  h1 {
+    color: #6d6d6d;
+    font-family: Lato;
+    font-size: 22px;
+    font-weight: 400;
+    line-height: 26px;
+    letter-spacing: 0.05em;
+    text-align: left;
+    margin-top: 16px;
+  }
+
+  @media (max-width: 620px) {
+    width: 100vw;
+  }
+`;
 const Metainfo = styled.div`
   width: 65%;
   height: 100%;
@@ -395,7 +417,7 @@ const PostLinkBox = styled.a`
   cursor: pointer;
 `;
 
-const PostLink = styled.a`
+const PostLink = styled.div`
   all: unset;
   font-family: "Lato";
   font-style: normal;
@@ -407,9 +429,9 @@ const PostLink = styled.a`
   line-height: 13px;
   cursor: pointer;
   margin-left: 19px;
-  &:hover {
-    text-decoration: underline;
-  }
+
+  text-decoration: underline;
+
   @media (max-width: 620px) {
     font-size: 9px;
     line-height: 11px;

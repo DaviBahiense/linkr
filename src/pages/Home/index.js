@@ -38,7 +38,7 @@ export default function Home() {
 
   useInterval(() => {
     newPostsCounter();
-  }, 3000);
+  }, 15000);
 
   function renderPage() {
     renderPosts();
@@ -49,16 +49,26 @@ export default function Home() {
     renderPosts();
     setNewPosts(null);
     setLoadingNew(true);
+    setLoadingPosts(false);
   }
 
   async function newPostsCounter() {
     try {
-      const { data: postData } = await api.getAllPosts(auth);
+      const { data: postData } = await api.getPosts(auth);
 
       if (postData.length > oldPosts.length) {
         let number = postData.length - oldPosts.length;
 
         setNewPosts(number);
+      } else if (posts.length >= 20 || postData.length >= 20) {
+        let old = posts[posts.length - 1].postId;
+        let created = postData[postData.length - 1].postId;
+        let info = created - old;
+        if (info === 0) {
+          setNewPosts(null);
+        } else {
+          setNewPosts(info);
+        }
       }
     } catch (error) {
       console.log(error);
@@ -92,7 +102,7 @@ export default function Home() {
       alert("Houve um erro ao publicar seu link");
     }
     setIsLoading(false);
-    // renderPosts();
+    renderPosts();
   }
 
   function handleInputChange(e) {
@@ -102,7 +112,7 @@ export default function Home() {
   async function renderPosts() {
     try {
       const { data: postData } = await api.getPosts(auth);
-      const { data: oldData } = await api.getAllPosts(auth);
+      const { data: oldData } = await api.getPosts(auth);
 
       setPosts(postData);
       setLoadingPosts(false);
@@ -165,7 +175,12 @@ export default function Home() {
           {loadingNew ? (
             <LoaderNew>
               {" "}
-              <TailSpin color="#ffffff" height={30} width={30} />
+              <TailSpin
+                color="#6D6D6D;
+"
+                height={36}
+                width={36}
+              />
               <h1>"Loading more posts..."</h1>
             </LoaderNew>
           ) : (

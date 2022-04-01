@@ -114,6 +114,14 @@ function getUserFollow(token) {
   return axios.get(`${BASE_URL}/follows`, createConfig(token));
 }
 
+function postRepost(token, id, type) {
+  return axios.post(`${BASE_URL}/reposts/${id}/${type}`, {}, createConfig(token));
+}
+
+function getReposts(token, id) {
+  return axios.get(`${BASE_URL}/reposts/${id}`, createConfig(token));
+}
+
 const api = {
   signup,
   login,
@@ -133,6 +141,8 @@ const api = {
   postFollow,
   getFollow,
   getUserFollow,
+  postRepost,
+  getReposts,
 };
 
 export default api;

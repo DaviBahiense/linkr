@@ -9,8 +9,7 @@ const Title = styled.div`
     margin-bottom: 40px;
 
     @media (max-width: 620px) {
-        margin: 0px 17px 17px 17px;
-        margin-top: 91px;
+        margin: 150px 17px 17px 17px;
     }
 
     img{

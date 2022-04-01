@@ -123,7 +123,7 @@ const Post = styled.div`
   width: 611px;
 
   position: relative;
-  z-index: 2;
+
   border-radius: 16px;
   background: #171717;
   margin-bottom: 16px;

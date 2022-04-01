@@ -33,6 +33,7 @@ export default function Post(p) {
   const [modal, setModal] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [comments, setComments] = useState(false);
+  const [reload, setReload] = useState(false);
 
   const { auth } = useAuth();
   const navigate = useNavigate();
@@ -118,8 +119,11 @@ export default function Post(p) {
           <Like id={p.postId} />
 
           <CommentsIcon
-            onClick={() => setComments(!comments)}
+            onClick={() => {
+              setComments(!comments);
+            }}
             postId={p.postId}
+            reload={reload}
           />
         </Container>
 
@@ -206,7 +210,12 @@ export default function Post(p) {
       </PostWrapper>
       {comments ? (
         <CommentsContainer>
-          <Comments postOwner={p.userId} postId={p.postId} clicked={comments} />
+          <Comments
+            postOwner={p.userId}
+            postId={p.postId}
+            setReload={setReload}
+            reload={reload}
+          />
         </CommentsContainer>
       ) : null}
     </>

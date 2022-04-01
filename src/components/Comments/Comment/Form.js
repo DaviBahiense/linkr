@@ -17,6 +17,7 @@ const StyledForm = styled.form`
   width: ${(props) => props.width};
   height: ${(props) => (props.height ? props.height : "initial")};
   display: flex;
-  flex-flow: column nowrap;
+  align-items: center;
+
   justify-content: space-between;
 `;

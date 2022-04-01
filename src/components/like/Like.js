@@ -35,42 +35,42 @@ export default function Like({ id }) {
     }`;
   }
 
-  function handleLike() {
-    api
-      .postLike(auth, id, `${like ? "unlike" : "like"}`)
-      .then((response) => {
-        setLike(!like);
-      })
-      .catch((error) => {
-        console.error(error.response);
-      });
-  }
+    function handleLike(){
+        const currentLike = like;
+        setLike(!like)
+        currentLike? setAmountLikes(amountLikes-1):setAmountLikes(amountLikes+1)
+        api.postLike(auth, id, `${like?'unlike':'like'}`).then(response => {
+            setLike(!currentLike)
+            handleAmountLikes()
+        }).catch(error => {
+            console.error(error.response)
+            setLike(currentLike)
+        })
+    }
 
-  useEffect(() => {
-    api.getLikes(auth, id).then((response) => {
-      setData(response.data);
-      setAmountLikes(response.data.length);
-      const likeUser = response.data?.find((element) => element.id === user.id);
-      if (likeUser) {
-        setLike(true);
-      } else {
-        setLike(false);
-      }
-    });
-  }, [like]);
+    function handleAmountLikes(){
+        api.getLikes(auth, id).then(response => {
+            setData(response.data)
+            setAmountLikes(response.data.length)
+            const likeUser = response?.data.find(element => element.id === user.id)
+            if(likeUser){
+                setLike(true)
+            } else {
+                setLike(false);
+            }
+        })
+    }
 
-  return (
-    <StyledLike>
-      {like ? (
-        <FaHeart onClick={handleLike} color={"#AC0000"} className="icons" />
-      ) : (
-        <FiHeart onClick={handleLike} color={"#FFFFFF"} className="icons" />
-      )}
-      <a data-tip={textLikes}>
-        {" "}
-        {amountLikes} {amountLikes > 1 ? "likes" : "like"}{" "}
-      </a>
-      <ReactTooltip place="bottom" type="light" effect="solid" />
-    </StyledLike>
-  );
+    useEffect(()=>{
+        handleAmountLikes()
+    }, [])
+
+    return (
+        <StyledLike>
+            {like? <FaHeart onClick={handleLike} color={'#AC0000'} className="icons"/>:
+            <FiHeart onClick={handleLike} color={'#FFFFFF'} className="icons"/>}
+            <a data-tip={textLikes}> {amountLikes>=0?amountLikes:0} {amountLikes > 1? 'likes':'like'} </a>
+            <ReactTooltip place="bottom" type="light" effect="solid"/>
+        </StyledLike>
+    )
 }

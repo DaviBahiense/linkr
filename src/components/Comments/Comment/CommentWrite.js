@@ -8,7 +8,7 @@ import Input from "./Input";
 import { FiSend } from "react-icons/fi";
 import api from "../../../services/api";
 
-const CommentWrite = ({ postId, recharge }) => {
+const CommentWrite = ({ postId, setReload, reload }) => {
   const { user } = useUser();
   const [comment, setComment] = useState("");
   const [disabled, setDisabled] = useState(false);
@@ -25,6 +25,7 @@ const CommentWrite = ({ postId, recharge }) => {
     try {
       api.createComment(body);
       setComment("");
+      setReload(!reload);
     } catch (error) {
       console.log(error);
       alert("Erro ao criar commentario");
@@ -49,20 +50,10 @@ const CommentWrite = ({ postId, recharge }) => {
           fSize="14px"
           data={{ value: comment, setValue: setComment }}
         />
-        <div
-          style={{
-            position: "absolute",
-            right: 25,
-            height: 60,
-            display: "flex",
-            flexFlow: "column nowrap",
-            justifyContent: "center",
-          }}
-        >
-          <Button type="submit" width={20} height={20} color="transparent">
-            <FiSend onClick={!recharge} />
-          </Button>
-        </div>
+
+        <Button type="submit" width={20} height={20} color="transparent">
+          <FiSend />
+        </Button>
       </Form>
     </Container>
   );

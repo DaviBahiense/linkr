@@ -1,6 +1,6 @@
 import axios from "axios";
 
-export const BASE_URL = "http://localhost:5000";
+export const BASE_URL = "https://linkrr.herokuapp.com";
 
 function createConfig(token) {
   return { headers: { Authorization: `Bearer ${token}` } };
@@ -26,6 +26,12 @@ function getUser(token) {
 }
 
 function getPosts(token) {
+  const config = createConfig(token);
+  const promise = axios.get(`${BASE_URL}/posts`, config);
+  return promise;
+}
+
+function getAllPosts(token) {
   const config = createConfig(token);
   const promise = axios.get(`${BASE_URL}/posts`, config);
   return promise;
@@ -112,6 +118,14 @@ async function verifyFollow(token, followerId, userId) {
   return await axios.get(`${BASE_URL}/search/verifyFollow/${followerId}/${userId}`, createConfig(token))
 }
 
+function postRepost(token, id, type) {
+  return axios.post(`${BASE_URL}/reposts/${id}/${type}`, {}, createConfig(token));
+}
+
+function getReposts(token, id) {
+  return axios.get(`${BASE_URL}/reposts/${id}`, createConfig(token));
+}
+
 const api = {
   signup,
   login,
@@ -132,6 +146,8 @@ const api = {
   getFollow,
   getUserFollow,
   verifyFollow,
+  postRepost,
+  getReposts,
 };
 
 export default api;

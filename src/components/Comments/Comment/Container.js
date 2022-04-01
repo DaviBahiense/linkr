@@ -54,7 +54,7 @@ const StyledContainer = styled.div`
   align-items: ${(props) => (props.align ? props.align : "center")};
   justify-content: ${(props) =>
     props.justify ? props.justify : "space-between"};
-  width: ${(props) => (props.width ? props.width : "95%")};
+  width: ${(props) => (props.width ? props.width : "98%")};
   min-width: ${(props) => (props.minW ? props.minW : "0")};
   max-width: ${(props) => (props.maxW ? props.maxW : "100%")};
   min-height: ${(props) => (props.minH ? props.minH : "0")};

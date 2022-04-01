@@ -3,6 +3,9 @@ import { useEffect, useState } from "react";
 import api from "../../services/api";
 import TopBar from "../../components/TopBar/TopBar.js";
 import useAuth from "../../hooks/useAuth";
+import useInterval from "react-useinterval";
+import { TailSpin } from "react-loader-spinner";
+import { FaSyncAlt } from "react-icons/fa";
 import {
   PostContainer,
   Feed,
@@ -13,6 +16,8 @@ import {
   Button,
   PostContent,
   Main,
+  NewCounter,
+  LoaderNew,
 } from "./style.js";
 import Timeline from "../../components/posts/Timeline";
 import HashtagBox from "../../components/HashtagBox";
@@ -24,6 +29,9 @@ export default function Home() {
   const [formData, setFormData] = useState({ link: "", description: "" });
   const [isLoading, setIsLoading] = useState(false);
   const [loadingPosts, setLoadingPosts] = useState(true);
+  const [newPosts, setNewPosts] = useState(null);
+  const [loadingNew, setLoadingNew] = useState(false);
+  const [oldPosts, setOldPosts] = useState([]);
   const [loadHashtagBox, setLoadHashtagBox] = useState(false);
   const navigate = useNavigate();
 
@@ -36,9 +44,43 @@ export default function Home() {
     renderPage();
   }, []);
 
+  useInterval(() => {
+    newPostsCounter();
+  }, 15000);
+
   function renderPage() {
     renderPosts();
     handleUser();
+  }
+
+  function refreshPage() {
+    renderPosts();
+    setNewPosts(null);
+    setLoadingNew(true);
+    setLoadingPosts(false);
+  }
+
+  async function newPostsCounter() {
+    try {
+      const { data: postData } = await api.getPosts(auth);
+
+      if (postData.length > oldPosts.length) {
+        let number = postData.length - oldPosts.length;
+
+        setNewPosts(number);
+      } else if (posts.length >= 20 || postData.length >= 20) {
+        let old = posts[posts.length - 1].postId;
+        let created = postData[postData.length - 1].postId;
+        let info = created - old;
+        if (info === 0) {
+          setNewPosts(null);
+        } else {
+          setNewPosts(info);
+        }
+      }
+    } catch (error) {
+      console.log(error);
+    }
   }
 
   async function handleUser() {
@@ -79,9 +121,12 @@ export default function Home() {
   async function renderPosts() {
     try {
       const { data: postData } = await api.getPosts(auth);
+      const { data: oldData } = await api.getPosts(auth);
 
       setPosts(postData);
       setLoadingPosts(false);
+      setLoadingNew(false);
+      setOldPosts(oldData);
     } catch (error) {
       console.log(error);
       if (posts.length !== 0) {
@@ -126,8 +171,30 @@ export default function Home() {
                 </Button>
               </PostContent>
             </NewPost>
-          </form>
+          </form>{" "}
+          {newPosts !== null ? (
+            <NewCounter>
+              <h1>{newPosts} new posts, load more!</h1>
+              <FaSyncAlt color="white" onClick={() => refreshPage()} />{" "}
+            </NewCounter>
+          ) : (
+            ""
+          )}
           <Timeline loadingPosts={loadingPosts} posts={posts} reload={renderPosts} />
+          {loadingNew ? (
+            <LoaderNew>
+              {" "}
+              <TailSpin
+                color="#6D6D6D;
+"
+                height={36}
+                width={36}
+              />
+              <h1>"Loading more posts..."</h1>
+            </LoaderNew>
+          ) : (
+            ""
+          )}
         </PostContainer>
       </Feed>
 

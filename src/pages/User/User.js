@@ -8,6 +8,8 @@ import { Feed, PostContainer } from "../Home/style";
 import TopBar from "../../components/TopBar/TopBar.js";
 import { Title } from "./style";
 import Follow from "../../components/Follow/Follow";
+import HashtagBox from "../../components/HashtagBox";
+import { Main } from "../Hashtag/style";
 
 export default function User() {
     const [posts, setPosts] = useState([])
@@ -31,7 +33,7 @@ export default function User() {
         })
     }, [id])
     return (
-        <>
+        <Main>
             <TopBar {...user} />
             <Feed>
                 <PostContainer>
@@ -45,6 +47,7 @@ export default function User() {
                     <Timeline posts={posts} loadingPosts={loadingPosts} />
                 </PostContainer>
             </Feed>
-        </>
+            <HashtagBox />
+        </Main>
     )
 }

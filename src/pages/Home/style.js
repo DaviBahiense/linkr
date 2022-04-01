@@ -1,6 +1,62 @@
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 
+const NewCounter = styled.div`
+  display: flex;
+  flex-direction: row;
+
+  background-color: #1877f2;
+  box-shadow: 0px 4px 4px 0px #00000040;
+  height: 61px;
+  align-items: center;
+  justify-content: center;
+  width: 611px;
+
+  border-radius: 16px;
+  margin-top: 11px;
+  margin-bottom: 17px;
+
+  @media (max-width: 620px) {
+    width: 100vw;
+    border-radius: 0px;
+  }
+
+  h1 {
+    font-family: Lato;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 19px;
+    letter-spacing: 0em;
+    text-align: left;
+    color: #ffffff;
+    margin-right: 14px;
+  }
+`;
+
+const LoaderNew = styled.div`
+  display: flex;
+  flex-direction: column;
+  height: 244px;
+  width: 611px;
+  justify-content: center;
+  align-items: center;
+
+  h1 {
+    color: #6d6d6d;
+    font-family: Lato;
+    font-size: 22px;
+    font-weight: 400;
+    line-height: 26px;
+    letter-spacing: 0.05em;
+    text-align: left;
+    margin-top: 16px;
+  }
+
+  @media (max-width: 620px) {
+    width: 100vw;
+  }
+`;
 const Metainfo = styled.div`
   width: 65%;
   height: 100%;
@@ -105,6 +161,7 @@ const NewPost = styled.div`
 const Posts = styled.div`
   display: flex;
   flex-direction: column;
+  gap: 16px 0;
 
   h1 {
     margin-top: 50px;
@@ -123,10 +180,9 @@ const Post = styled.div`
   width: 611px;
 
   position: relative;
-  z-index: 2;
+
   border-radius: 16px;
   background: #171717;
-  margin-bottom: 16px;
   display: flex;
   @media (max-width: 620px) {
     width: 100vw;
@@ -137,7 +193,7 @@ const Container = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 19px 0px;
+  gap: 10px 0px;
 `;
 const Photo = styled.img`
   width: 50px;
@@ -358,8 +414,12 @@ const PostContent = styled.div`
     margin-left: 15px;
   }
 `;
+const PostLinkBox = styled.a`
+  all: unset;
+  cursor: pointer;
+`;
 
-const PostLink = styled.a`
+const PostLink = styled.div`
   all: unset;
   font-family: "Lato";
   font-style: normal;
@@ -371,9 +431,9 @@ const PostLink = styled.a`
   line-height: 13px;
   cursor: pointer;
   margin-left: 19px;
-  &:hover {
-    text-decoration: underline;
-  }
+
+  text-decoration: underline;
+
   @media (max-width: 620px) {
     font-size: 9px;
     line-height: 11px;
@@ -473,4 +533,7 @@ export {
   EditDescription,
   StyledLink,
   Main,
+  NewCounter,
+  LoaderNew,
+  PostLinkBox,
 };

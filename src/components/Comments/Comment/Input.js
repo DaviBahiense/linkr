@@ -52,7 +52,7 @@ const Input = ({
 export default Input;
 
 const StyledInput = styled.input`
-  width: ${(props) => (props.width ? `${props.width}px` : "105%")};
+  width: ${(props) => (props.width ? `${props.width}px` : "115%")};
   height: ${(props) => (props.height ? `${props.height}px` : "45px")};
   margin: 5px;
   border-radius: ${(props) => (props.radius ? `${props.radius}%` : "5px")};

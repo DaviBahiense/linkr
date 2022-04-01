@@ -29,8 +29,8 @@ export default function HashtagBox({ reload }) {
       <div className="border"></div>
       <div className="tags">
         {tags.length > 0
-          ? tags.map(({ tag }) => (
-            <StyledLink to={`/hashtag/${tag}`}># {tag}</StyledLink>
+          ? tags.map(({ tag }, i) => (
+            <StyledLink key={i} to={`/hashtag/${tag}`}># {tag}</StyledLink>
           ))
           : ""}
       </div>

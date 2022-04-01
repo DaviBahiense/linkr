@@ -1,6 +1,6 @@
 import axios from "axios";
 
-export const BASE_URL = "http://linkrr.herokuapp.com";
+export const BASE_URL = "http://localhost:5000";
 
 function createConfig(token) {
   return { headers: { Authorization: `Bearer ${token}` } };

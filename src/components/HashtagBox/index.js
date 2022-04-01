@@ -1,12 +1,13 @@
 import styled from "styled-components";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import api from "../../services/api";
 import useAuth from "../../hooks/useAuth";
 import { useEffect, useState } from "react";
 
-export default function HashtagBox({ reload }) {
+export default function HashtagBox({ reload, reloadPosts }) {
   const { auth } = useAuth();
   const [tags, setTags] = useState([]);
+  const navigate = useNavigate();
 
   useEffect(() => {
     getTags();
@@ -31,7 +32,11 @@ export default function HashtagBox({ reload }) {
       <div className="tags">
         {tags.length > 0
           ? tags.map(({ tag }) => (
-            <StyledLink to={`/hashtag/${tag}`}># {tag}</StyledLink>
+            <StyledLink onClick={() => {
+              reloadPosts()
+              navigate(`/hashtag/${tag}`)
+            }}># {tag}
+            </StyledLink>
           ))
           : ""}
       </div>
@@ -90,7 +95,7 @@ const Box = styled.div`
   }
 `;
 
-const StyledLink = styled(Link)`
+const StyledLink = styled.span`
   text-decoration: none;
   font-size: 19px;
   line-height: 23px;

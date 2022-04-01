@@ -28,6 +28,7 @@ import CommentsIcon from "../../components/Comments/CommentsIcon";
 import Comments from "../../components/Comments";
 
 export default function Post(p) {
+
   const [edit, setEdit] = useState(false);
   const [user, setUser] = useState("");
   const [modal, setModal] = useState(false);
@@ -181,7 +182,11 @@ export default function Post(p) {
                 <ReactHashtag
                   renderHashtag={(hashtag) => (
                     <Hashtag
-                      onClick={() => navigate(`/hashtag/${hashtag.substr(1)}`)}
+                      onClick={() => {
+                        p.reload();
+                        navigate(`/hashtag/${hashtag.substr(1)}`)
+                      }
+                      }
                     >
                       {hashtag}
                     </Hashtag>

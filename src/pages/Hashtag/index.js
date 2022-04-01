@@ -59,11 +59,11 @@ export default function Home() {
       <Feed>
         <PostContainer>
           <h1 className="head">#hashtag</h1>
-          <Timeline loadingPosts={loadingPosts} posts={posts} />
+          <Timeline loadingPosts={loadingPosts} posts={posts} reload={renderPosts} />
         </PostContainer>
       </Feed>
 
-      <HashtagBox></HashtagBox>
+      <HashtagBox reloadPosts={renderPosts}></HashtagBox>
     </Main>
   );
 }

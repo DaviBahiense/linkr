@@ -127,11 +127,11 @@ export default function Home() {
               </PostContent>
             </NewPost>
           </form>
-          <Timeline loadingPosts={loadingPosts} posts={posts} />
+          <Timeline loadingPosts={loadingPosts} posts={posts} reload={renderPosts} />
         </PostContainer>
       </Feed>
 
-      <HashtagBox reload={loadHashtagBox}></HashtagBox>
+      <HashtagBox reload={loadHashtagBox} reloadPosts={renderPosts}></HashtagBox>
     </Main>
   );
 }

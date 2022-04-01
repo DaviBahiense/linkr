@@ -8,6 +8,7 @@ import useAuth from "../../hooks/useAuth";
 import useUser from "../../hooks/useUser";
 
 export default function Like({ id }) {
+  const [block, setBlock] = useState(false);
   const [like, setLike] = useState(false);
   const [data, setData] = useState();
   const [amountLikes, setAmountLikes] = useState(0);
@@ -35,42 +36,45 @@ export default function Like({ id }) {
     }`;
   }
 
-  function handleLike() {
-    api
-      .postLike(auth, id, `${like ? "unlike" : "like"}`)
-      .then((response) => {
-        setLike(!like);
+    function handleLike(){
+      setBlock(true);
+      const currentLike = like;
+      setLike(!like)
+      currentLike? setAmountLikes(amountLikes-1):setAmountLikes(amountLikes+1)
+      api.postLike(auth, id, `${like?'unlike':'like'}`).then(response => {
+          setLike(!currentLike)
+          handleAmountLikes()
+          setBlock(false);
+      }).catch(error => {
+          console.error(error.response)
+          setLike(currentLike)
+          setBlock(false);
       })
-      .catch((error) => {
-        console.error(error.response);
-      });
-  }
+    }
 
-  useEffect(() => {
-    api.getLikes(auth, id).then((response) => {
-      setData(response.data);
-      setAmountLikes(response.data.length);
-      const likeUser = response.data?.find((element) => element.id === user.id);
-      if (likeUser) {
-        setLike(true);
-      } else {
-        setLike(false);
-      }
-    });
-  }, [like]);
+    function handleAmountLikes(){
+        api.getLikes(auth, id).then(response => {
+            setData(response.data)
+            setAmountLikes(response.data.length)
+            const likeUser = response?.data.find(element => element.id === user.id)
+            if(likeUser){
+                setLike(true)
+            } else {
+                setLike(false);
+            }
+        })
+    }
 
-  return (
-    <StyledLike>
-      {like ? (
-        <FaHeart onClick={handleLike} color={"#AC0000"} className="icons" />
-      ) : (
-        <FiHeart onClick={handleLike} color={"#FFFFFF"} className="icons" />
-      )}
-      <a data-tip={textLikes}>
-        {" "}
-        {amountLikes} {amountLikes > 1 ? "likes" : "like"}{" "}
-      </a>
-      <ReactTooltip place="bottom" type="light" effect="solid" />
-    </StyledLike>
-  );
+    useEffect(()=>{
+        handleAmountLikes()
+    }, [])
+
+    return (
+        <StyledLike block={block}>
+            {like? <FaHeart onClick={handleLike} color={'#AC0000'} className="icons"/>:
+            <FiHeart onClick={handleLike} color={'#FFFFFF'} className="icons"/>}
+            <a data-tip={textLikes}> {amountLikes>=0?amountLikes:0} {amountLikes > 1? 'likes':'like'} </a>
+            <ReactTooltip place="bottom" type="light" effect="solid"/>
+        </StyledLike>
+    )
 }

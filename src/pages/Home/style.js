@@ -161,6 +161,7 @@ const NewPost = styled.div`
 const Posts = styled.div`
   display: flex;
   flex-direction: column;
+  gap: 16px 0;
 
   h1 {
     margin-top: 50px;
@@ -182,7 +183,6 @@ const Post = styled.div`
 
   border-radius: 16px;
   background: #171717;
-  margin-bottom: 16px;
   display: flex;
   @media (max-width: 620px) {
     width: 100vw;
@@ -193,7 +193,7 @@ const Container = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 19px 0px;
+  gap: 10px 0px;
 `;
 const Photo = styled.img`
   width: 50px;

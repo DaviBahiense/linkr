@@ -1,12 +1,13 @@
 import styled from "styled-components";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import api from "../../services/api";
 import useAuth from "../../hooks/useAuth";
 import { useEffect, useState } from "react";
 
-export default function HashtagBox({ reload }) {
+export default function HashtagBox({ reload, reloadPosts }) {
   const { auth } = useAuth();
   const [tags, setTags] = useState([]);
+  const navigate = useNavigate();
 
   useEffect(() => {
     getTags();
@@ -15,8 +16,8 @@ export default function HashtagBox({ reload }) {
   async function getTags() {
     try {
       const tagsList = await api.getTrendingTags(auth);
-
       setTags(tagsList.data);
+
     } catch (error) {
       console.log(error.response);
     }
@@ -30,8 +31,14 @@ export default function HashtagBox({ reload }) {
       <div className="border"></div>
       <div className="tags">
         {tags.length > 0
-          ? tags.map(({ tag }) => (
-            <StyledLink to={`/hashtag/${tag}`}># {tag}</StyledLink>
+          ? tags.map(({ tag }, i) => (
+            <StyledLink
+              key={i}
+              onClick={() => {
+                reloadPosts()
+                navigate(`/hashtag/${tag}`)
+              }}># {tag}
+            </StyledLink>
           ))
           : ""}
       </div>
@@ -90,11 +97,13 @@ const Box = styled.div`
   }
 `;
 
-const StyledLink = styled(Link)`
+const StyledLink = styled.span`
   text-decoration: none;
   font-size: 19px;
   line-height: 23px;
   letter-spacing: 0.05em;
+
+  cursor: pointer;
 
   color: #ffffff;
 `;

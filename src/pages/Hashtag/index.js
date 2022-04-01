@@ -44,7 +44,7 @@ export default function Home() {
       setPosts(postData);
       setLoadingPosts(false);
     } catch (error) {
-      console.log("error");
+      console.log(error);
       if (posts.length !== 0) {
         alert(
           "An error occured while trying to fetch the posts, please refresh the page"
@@ -59,11 +59,11 @@ export default function Home() {
       <Feed>
         <PostContainer>
           <h1 className="head">#hashtag</h1>
-          <Timeline loadingPosts={loadingPosts} posts={posts} />
+          <Timeline loadingPosts={loadingPosts} posts={posts} reload={renderPosts} />
         </PostContainer>
       </Feed>
 
-      <HashtagBox></HashtagBox>
+      <HashtagBox reloadPosts={renderPosts}></HashtagBox>
     </Main>
   );
 }

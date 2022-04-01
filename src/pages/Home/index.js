@@ -180,7 +180,7 @@ export default function Home() {
           ) : (
             ""
           )}
-          <Timeline loadingPosts={loadingPosts} posts={posts} />
+          <Timeline loadingPosts={loadingPosts} posts={posts} reload={renderPosts} />
           {loadingNew ? (
             <LoaderNew>
               {" "}
@@ -198,7 +198,7 @@ export default function Home() {
         </PostContainer>
       </Feed>
 
-      <HashtagBox reload={loadHashtagBox}></HashtagBox>
+      <HashtagBox reload={loadHashtagBox} reloadPosts={renderPosts}></HashtagBox>
     </Main>
   );
 }

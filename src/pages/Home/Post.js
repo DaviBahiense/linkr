@@ -27,8 +27,11 @@ import Like from "../../components/like/Like";
 import ReactHashtag from "react-hashtag";
 import CommentsIcon from "../../components/Comments/CommentsIcon";
 import Comments from "../../components/Comments";
+import Share from "../../components/Share/Share";
+import useUser from "../../hooks/useUser";
 
 export default function Post(p) {
+
   const [edit, setEdit] = useState(false);
   const [user, setUser] = useState("");
   const [modal, setModal] = useState(false);
@@ -100,7 +103,6 @@ export default function Post(p) {
   }
 
   async function handleDeletePost(id) {
-    console.log(id);
     setModal(false);
     setIsLoading(true);
     try {
@@ -118,7 +120,6 @@ export default function Post(p) {
         <Container>
           <Photo src={p.img} alt="userPhoto" />
           <Like id={p.postId} />
-
           <CommentsIcon
             onClick={() => {
               setComments(!comments);
@@ -126,8 +127,8 @@ export default function Post(p) {
             postId={p.postId}
             reload={reload}
           />
+          <Share id={p.postId}/>
         </Container>
-
         <PostInfo>
           <UserPostInterac>
             <StyledLink to={`/user/${p.userId}`}>
@@ -186,7 +187,11 @@ export default function Post(p) {
                 <ReactHashtag
                   renderHashtag={(hashtag) => (
                     <Hashtag
-                      onClick={() => navigate(`/hashtag/${hashtag.substr(1)}`)}
+                      onClick={() => {
+                        p.reload();
+                        navigate(`/hashtag/${hashtag.substr(1)}`)
+                      }
+                      }
                     >
                       {hashtag}
                     </Hashtag>

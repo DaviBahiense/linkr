@@ -8,6 +8,8 @@ import { Feed, PostContainer } from "../Home/style";
 import TopBar from "../../components/TopBar/TopBar.js";
 import { Title } from "./style";
 import Follow from "../../components/Follow/Follow";
+import HashtagBox from "../../components/HashtagBox";
+import { Main } from "../Hashtag/style";
 
 export default function User() {
     const [posts, setPosts] = useState([])
@@ -29,9 +31,9 @@ export default function User() {
             setPosts(response.data.filter(element => element.userId === Number(id)));
             setLoadingPosts(false);
         })
-    }, [])
+    }, [id])
     return (
-        <>
+        <Main>
             <TopBar {...user} />
             <Feed>
                 <PostContainer>
@@ -40,11 +42,12 @@ export default function User() {
                             <img src={userData?.img} alt="userPhoto" />
                             <h1>{`${userData?.name}'s posts`}</h1>
                         </div>
-                        {user.id !== Number(id) && <Follow id={id}/>}
+                        {user.id !== Number(id) && <Follow id={id} />}
                     </Title>
                     <Timeline posts={posts} loadingPosts={loadingPosts} />
                 </PostContainer>
             </Feed>
-        </>
+            <HashtagBox />
+        </Main>
     )
 }

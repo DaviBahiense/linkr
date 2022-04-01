@@ -8,6 +8,7 @@ import useAuth from "../../hooks/useAuth";
 import useUser from "../../hooks/useUser";
 
 export default function Like({ id }) {
+  const [block, setBlock] = useState(false);
   const [like, setLike] = useState(false);
   const [data, setData] = useState();
   const [amountLikes, setAmountLikes] = useState(0);
@@ -36,16 +37,19 @@ export default function Like({ id }) {
   }
 
     function handleLike(){
-        const currentLike = like;
-        setLike(!like)
-        currentLike? setAmountLikes(amountLikes-1):setAmountLikes(amountLikes+1)
-        api.postLike(auth, id, `${like?'unlike':'like'}`).then(response => {
-            setLike(!currentLike)
-            handleAmountLikes()
-        }).catch(error => {
-            console.error(error.response)
-            setLike(currentLike)
-        })
+      setBlock(true);
+      const currentLike = like;
+      setLike(!like)
+      currentLike? setAmountLikes(amountLikes-1):setAmountLikes(amountLikes+1)
+      api.postLike(auth, id, `${like?'unlike':'like'}`).then(response => {
+          setLike(!currentLike)
+          handleAmountLikes()
+          setBlock(false);
+      }).catch(error => {
+          console.error(error.response)
+          setLike(currentLike)
+          setBlock(false);
+      })
     }
 
     function handleAmountLikes(){
@@ -66,7 +70,7 @@ export default function Like({ id }) {
     }, [])
 
     return (
-        <StyledLike>
+        <StyledLike block={block}>
             {like? <FaHeart onClick={handleLike} color={'#AC0000'} className="icons"/>:
             <FiHeart onClick={handleLike} color={'#FFFFFF'} className="icons"/>}
             <a data-tip={textLikes}> {amountLikes>=0?amountLikes:0} {amountLikes > 1? 'likes':'like'} </a>

@@ -5,9 +5,9 @@ import useAuth from "../../hooks/useAuth";
 import useUser from "../../hooks/useUser";
 import api from "../../services/api";
 import { StyledLike } from "../like/styledLike";
-import ConfirmModal from "../Modal/Modal";
 
 export default function Share({id}){
+    const [block, setBlock] = useState(false);
     const [repost, setRepost] = useState(false);
     const [data, setData] = useState()
     const [amountReposts, setAmountReposts] = useState(0)
@@ -32,19 +32,22 @@ export default function Share({id}){
     }
 
     function handleRepost(){
+        setBlock(true);
         let confirm
         if(!repost){
-            confirm = window.confirm("quer mesmo dar rt?");
+            confirm = window.confirm("Do you want to re-post this link?");
         }
 
         if(confirm || repost){
             repost? setAmountReposts(amountReposts-1):setAmountReposts(amountReposts+1)
             api.postRepost(auth, id, `${repost?'unrepost':'repost'}`).then(response => {
+                setBlock(false);
                 setRepost(!repost)
                 handleAmountReposts()
             }).catch(error => {
                 console.error(error.response)
                 setRepost(repost)
+                setBlock(false);
             })
         }
     }
@@ -67,8 +70,8 @@ export default function Share({id}){
     }, [])
 
     return(
-        <StyledLike>
-            <FaRetweet color={'#ffffff'} size={'20px'} onClick={handleRepost}/>
+        <StyledLike block={block}>
+            <FaRetweet color={'#ffffff'} size={'20px'} onClick={handleRepost} className="icons"/>
             <a data-tip={textReposts}> {amountReposts} {amountReposts > 1? 're-posts':'re-post'} </a>
             <ReactTooltip place="bottom" type="light" effect="solid"/>
         </StyledLike>

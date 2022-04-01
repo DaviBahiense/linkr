@@ -31,6 +31,12 @@ function getPosts(token) {
   return promise;
 }
 
+function getAllPosts(token) {
+  const config = createConfig(token);
+  const promise = axios.get(`${BASE_URL}/posts`, config);
+  return promise;
+}
+
 function getPostsFromATag(token, tag) {
   const config = createConfig(token);
   const promise = axios.get(`${BASE_URL}/hashtags/${tag}`, config);

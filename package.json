@@ -23,6 +23,7 @@
     "react-scripts": "5.0.0",
     "react-search-box": "^2.2.1",
     "react-tooltip": "^4.2.21",
+    "react-useinterval": "^1.0.2",
     "styled-components": "^5.3.3",
     "web-vitals": "^2.1.4",
     "yup": "^0.32.11"

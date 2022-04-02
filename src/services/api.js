@@ -1,6 +1,6 @@
 import axios from "axios";
 
-export const BASE_URL = "https://linkrr.herokuapp.com";
+export const BASE_URL = "http://localhost:5000";
 
 function createConfig(token) {
   return { headers: { Authorization: `Bearer ${token}` } };
@@ -25,16 +25,25 @@ function getUser(token) {
   return promise;
 }
 
-function getPosts(token) {
+async function getPosts(token, offset) {
   const config = createConfig(token);
-  const promise = axios.get(`${BASE_URL}/posts`, config);
-  return promise;
-}
 
-function getAllPosts(token) {
-  const config = createConfig(token);
-  const promise = axios.get(`${BASE_URL}/posts`, config);
-  return promise;
+  let offsetQueryString = "";
+
+  if (offset) {
+    offsetQueryString = `?offset=${offset}`;
+  }
+
+  try {
+    const promise = await axios.get(
+      `${BASE_URL}/posts${offsetQueryString}`,
+      config
+    );
+    return promise;
+  } catch (error) {
+    console.log(error.response);
+    return;
+  }
 }
 
 function getPostsFromATag(token, tag) {

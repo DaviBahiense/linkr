@@ -22,6 +22,8 @@ import {
 import Timeline from "../../components/posts/Timeline";
 import HashtagBox from "../../components/HashtagBox";
 import SearchBox from "../../components/SearchBox/SearchBox";
+import InfiniteScroll from "react-infinite-scroll-component";
+import LoadingScroll from "../../components/posts/ScrollLoading.js";
 
 export default function Home() {
   const { auth } = useAuth();
@@ -35,6 +37,9 @@ export default function Home() {
   const [oldPosts, setOldPosts] = useState([]);
   const [loadHashtagBox, setLoadHashtagBox] = useState(false);
   const navigate = useNavigate();
+  const [limit, setLimit] = useState(10);
+  const [hasMore, setHasMore] = useState(true);
+  const [count, setCount] = useState(null);
 
   useEffect(() => {
     if (!auth) {
@@ -63,21 +68,12 @@ export default function Home() {
 
   async function newPostsCounter() {
     try {
-      const { data: postData } = await api.getPosts(auth);
+      const { data: postData } = await api.getPosts(auth, limit);
 
-      if (postData.length > oldPosts.length) {
-        let number = postData.length - oldPosts.length;
-
-        setNewPosts(number);
-      } else if (posts.length >= 20 || postData.length >= 20) {
-        let old = posts[posts.length - 1].postId;
-        let created = postData[postData.length - 1].postId;
-        let info = created - old;
-        if (info === 0) {
-          setNewPosts(null);
-        } else {
-          setNewPosts(info);
-        }
+      if (postData?.length === oldPosts?.length) {
+        return setNewPosts(0);
+      } else if (postData?.length > count) {
+        return setNewPosts(postData.length - count);
       }
     } catch (error) {
       console.log(error);
@@ -111,7 +107,7 @@ export default function Home() {
       alert("Houve um erro ao publicar seu link");
     }
     setIsLoading(false);
-    setLoadHashtagBox(!loadHashtagBox)
+    setLoadHashtagBox(!loadHashtagBox);
     renderPosts();
   }
 
@@ -121,13 +117,24 @@ export default function Home() {
 
   async function renderPosts() {
     try {
-      const { data: postData } = await api.getPosts(auth);
-      const { data: oldData } = await api.getPosts(auth);
+      const { data: postData } = await api.getPosts(auth, limit);
+      const { data: oldData } = await api.getPosts(auth, limit);
 
       setPosts(postData);
       setLoadingPosts(false);
       setLoadingNew(false);
       setOldPosts(oldData);
+      if (postData.length === 0) {
+        setHasMore(false);
+        return setCount(0);
+      }
+
+      setCount(postData[0].countPosts);
+      if (postData[0].countPosts <= limit) {
+        return setHasMore(false);
+      }
+
+      setLimit(limit + 10);
     } catch (error) {
       console.log(error);
       if (posts.length !== 0) {
@@ -145,62 +152,76 @@ export default function Home() {
         <SearchBox type={"timeline"} />
         <PostContainer>
           <h1 className="head">timeline</h1>
-          <form onSubmit={handleSubmitPost}>
-            <NewPost>
-              <Photo className="hidden" src={user.img} alt="userPhoto" />
+          <InfiniteScroll
+            dataLength={posts.length}
+            next={fetchMorePosts}
+            hasMore={hasMore}
+            loader={<LoadingScroll />}
+          >
+            <form onSubmit={handleSubmitPost}>
+              <NewPost>
+                <Photo className="hidden" src={user.img} alt="userPhoto" />
 
-              <PostContent>
-                <h1>What are you going to share today?</h1>
-                <InputUrl
-                  type="text"
-                  name="link"
-                  value={formData.link}
-                  placeholder="    http://..."
-                  onChange={handleInputChange}
-                  disabled={isLoading}
-                  required
-                />
-                <Description
-                  type="textarea"
-                  name="description"
-                  value={formData.description}
-                  placeholder="Awesome article about #javascript"
-                  onChange={handleInputChange}
-                  disabled={isLoading}
-                />
-                <Button type="submit" disabled={isLoading}>
-                  {isLoading ? "Publishing..." : "Publish"}
-                </Button>
-              </PostContent>
-            </NewPost>
-          </form>{" "}
-          {newPosts !== null ? (
-            <NewCounter>
-              <h1>{newPosts} new posts, load more!</h1>
-              <FaSyncAlt color="white" onClick={() => refreshPage()} />{" "}
-            </NewCounter>
-          ) : (
-            ""
-          )}
-          <Timeline loadingPosts={loadingPosts} posts={posts} reload={renderPosts} />
-          {loadingNew ? (
-            <LoaderNew>
-              {" "}
-              <TailSpin
-                color="#6D6D6D;
+                <PostContent>
+                  <h1>What are you going to share today?</h1>
+                  <InputUrl
+                    type="text"
+                    name="link"
+                    value={formData.link}
+                    placeholder="    http://..."
+                    onChange={handleInputChange}
+                    disabled={isLoading}
+                    required
+                  />
+                  <Description
+                    type="textarea"
+                    name="description"
+                    value={formData.description}
+                    placeholder="Awesome article about #javascript"
+                    onChange={handleInputChange}
+                    disabled={isLoading}
+                  />
+                  <Button type="submit" disabled={isLoading}>
+                    {isLoading ? "Publishing..." : "Publish"}
+                  </Button>
+                </PostContent>
+              </NewPost>
+            </form>{" "}
+            {newPosts !== null ? (
+              <NewCounter>
+                <h1>{newPosts} new posts, load more!</h1>
+                <FaSyncAlt color="white" onClick={() => refreshPage()} />{" "}
+              </NewCounter>
+            ) : (
+              ""
+            )}
+            <Timeline
+              loadingPosts={loadingPosts}
+              posts={posts}
+              reload={renderPosts}
+            />
+            {loadingNew ? (
+              <LoaderNew>
+                {" "}
+                <TailSpin
+                  color="#6D6D6D;
 "
-                height={36}
-                width={36}
-              />
-              <h1>"Loading more posts..."</h1>
-            </LoaderNew>
-          ) : (
-            ""
-          )}
+                  height={36}
+                  width={36}
+                />
+                <h1>"Loading more posts..."</h1>
+              </LoaderNew>
+            ) : (
+              ""
+            )}
+          </InfiniteScroll>
         </PostContainer>
       </Feed>
 
-      <HashtagBox reload={loadHashtagBox} reloadPosts={renderPosts}></HashtagBox>
+      <HashtagBox
+        reload={loadHashtagBox}
+        reloadPosts={renderPosts}
+      ></HashtagBox>
     </Main>
   );
 }

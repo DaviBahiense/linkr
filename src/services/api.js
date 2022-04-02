@@ -25,9 +25,9 @@ function getUser(token) {
   return promise;
 }
 
-function getPosts(token) {
+function getPosts(token, limit) {
   const config = createConfig(token);
-  const promise = axios.get(`${BASE_URL}/posts`, config);
+  const promise = axios.get(`${BASE_URL}/posts/?limit=${limit}`, config);
   return promise;
 }
 
@@ -115,11 +115,18 @@ function getUserFollow(token) {
 }
 
 async function verifyFollow(token, followerId, userId) {
-  return await axios.get(`${BASE_URL}/search/verifyFollow/${followerId}/${userId}`, createConfig(token))
+  return await axios.get(
+    `${BASE_URL}/search/verifyFollow/${followerId}/${userId}`,
+    createConfig(token)
+  );
 }
 
 function postRepost(token, id, type) {
-  return axios.post(`${BASE_URL}/reposts/${id}/${type}`, {}, createConfig(token));
+  return axios.post(
+    `${BASE_URL}/reposts/${id}/${type}`,
+    {},
+    createConfig(token)
+  );
 }
 
 function getReposts(token, id) {

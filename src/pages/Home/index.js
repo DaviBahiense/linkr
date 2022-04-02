@@ -34,6 +34,13 @@ export default function Home() {
   const [oldPosts, setOldPosts] = useState([]);
   const [loadHashtagBox, setLoadHashtagBox] = useState(false);
   const navigate = useNavigate();
+  const [follows, setFollows] = useState();
+
+  // useEffect(() => {
+  //   api.getUserFollow(auth).then((response) => {
+  //     setFollows(response.data.map(element => element.followId));
+  //   })
+  // },[])
 
   useEffect(() => {
     if (!auth) {
@@ -41,6 +48,9 @@ export default function Home() {
       alert("Para a Home, faça primeiro o login");
       return;
     }
+    api.getUserFollow(auth).then((response) => {
+      setFollows(response.data.map(element => element.followId));
+    })
     renderPage();
   }, []);
 
@@ -62,8 +72,8 @@ export default function Home() {
 
   async function newPostsCounter() {
     try {
-      const { data: postData } = await api.getPosts(auth);
-
+      let { data: postData } = await api.getPosts(auth);
+      postData = postData.filter(el => (follows.includes(el.reposterById) || (follows.includes(el.userId)&&el.reposterById===null)))
       if (postData.length > oldPosts.length) {
         let number = postData.length - oldPosts.length;
 
@@ -123,10 +133,10 @@ export default function Home() {
       const { data: postData } = await api.getPosts(auth);
       const { data: oldData } = await api.getPosts(auth);
 
-      setPosts(postData);
+      setPosts(postData.filter(el => follows.includes(el.reposterById) || (follows.includes(el.userId)&&el.reposterById===null)))
       setLoadingPosts(false);
       setLoadingNew(false);
-      setOldPosts(oldData);
+      setOldPosts(oldData.filter(el => (follows.includes(el.reposterById) || (follows.includes(el.userId)&&el.reposterById===null))));
     } catch (error) {
       console.log(error);
       if (posts.length !== 0) {

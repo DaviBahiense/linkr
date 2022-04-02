@@ -176,7 +176,7 @@ const Posts = styled.div`
   }
 `;
 const Post = styled.div`
-  height: 100%;
+  // height: 100%;
   width: 611px;
 
   position: relative;
